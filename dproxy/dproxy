@@ -1,0 +1,91 @@
+#!/usr/bin/env python
+import requests
+from flask import Flask, request
+from gunicorn.app.wsgiapp import WSGIApplication
+
+from dproxy.config import Config
+from dproxy.controllers.upload import post_upload
+from dproxy.controllers.rollout import post_rollout
+from dproxy.controllers.rollback import post_rollback
+from dproxy.controllers.versionlock import post_versionlock
+from dproxy.controllers.healthcheck import get_healthcheck
+
+
+def setup_proxy():
+    if not Config.TOKEN:
+        data = {
+            "created_by": "dproxy",
+            "hostname": Config.HOSTNAME,
+            "ip": Config.IP,
+            "state": "New",
+            "group": Config.GROUP,
+            "environment": Config.ENVIRONMENT,
+            "location": Config.LOCATION,
+        }
+        r = requests.post("https://deployment.unifiedlayer.com/api/1.0.0/register/proxy", json=data, verify=False)
+        resp = r.json()
+        if "TOKEN" in resp:
+            with open("/etc/default/dproxy", "a") as file:
+                file.write("TOKEN={}".format(resp["TOKEN"]))
+
+
+class DClient(WSGIApplication):
+
+    def __init__(self, app, options=None):
+        self.options = options or {}
+        self.application = app
+        super(WSGIApplication, self).__init__()
+
+    def load_config(self):
+        config = {key: value for key, value in self.options.items()
+                  if key in self.cfg.settings and value is not None}
+        for key, value in config.items():
+            self.cfg.set(key.lower(), value)
+
+    def load(self):
+        return self.application
+
+
+def create_app():
+    setup_proxy()
+
+    app = Flask(__name__)
+    app.config.from_object(Config)
+
+    @app.route('/', methods=['GET', 'POST'])
+    def healthcheck():
+        if request.method == 'GET':
+            return get_healthcheck()
+
+    @app.route('/rollout', methods=['POST'])
+    def rollout():
+        if request.method == 'POST':
+            return post_rollout()
+
+    @app.route('/rollback', methods=['POST'])
+    def rollback():
+        if request.method == 'POST':
+            return post_rollback()
+
+    @app.route('/versionlock', methods=['POST'])
+    def versionlock():
+        if request.method == 'POST':
+            return post_versionlock()
+
+    return app
+
+
+if __name__ == "__main__":
+    options = {
+        "bind": "%s:%s" % ("0.0.0.0", "8002"),
+        "workers": 2,
+        "reload-engine": "auto",
+        "spew": False,
+        "access-logformat": "%(h)s %(l)s %(u)s %(t)s '%(r)s' %(s)s %(b)s '%(f)s' '%(a)s'",
+        "disable-redirect-access-to-syslog": False,
+        "log-level": "debug",
+        "capture-output": True,
+        "worker_class": "sync",
+        "timeout": 600
+    }
+    DClient(create_app(), options).run()
