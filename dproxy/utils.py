@@ -1,25 +1,7 @@
-import re
 import dbus
 from subprocess import check_output, check_call
 
 from dclient.config import Config
-
-
-def get_yum_transaction_id():
-    history_list = sudo_cmd("yum history list", verbose=True)
-    history_list = history_list.splitlines()
-    count = 0
-    fl = 0
-    for line in history_list:
-        z = re.match("^-+$", line)
-        if z:
-            fl = count + 1
-            count += 1
-        else:
-            count += 1
-    fl = history_list[fl].split("|")
-    tid = fl[0]
-    return tid
 
 
 def sudo_cmd(cmd, verbose=None):
