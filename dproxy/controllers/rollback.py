@@ -5,6 +5,7 @@ from flask import request
 from dproxy.config import Config
 from dproxy.services.rollback import start_rollback
 
+
 def post_rollback():
     data = request.get_json()
 

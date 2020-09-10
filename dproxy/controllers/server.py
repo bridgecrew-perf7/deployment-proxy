@@ -14,6 +14,7 @@ def patch_server():
     }
     return response, 204
 
+
 def post_server_history():
     data = request.get_json()
 
