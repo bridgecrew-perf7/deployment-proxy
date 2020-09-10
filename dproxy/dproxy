@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 import requests
 from flask import Flask, request
 from gunicorn.app.wsgiapp import WSGIApplication
@@ -17,7 +17,7 @@ def setup_proxy():
             "created_by": "dproxy",
             "hostname": Config.HOSTNAME,
             "ip": Config.IP,
-            "state": "New",
+            "state": Config.STATE,
             "group": Config.GROUP,
             "environment": Config.ENVIRONMENT,
             "location": Config.LOCATION,
@@ -29,7 +29,7 @@ def setup_proxy():
                 file.write("TOKEN={}".format(resp["TOKEN"]))
 
 
-class DClient(WSGIApplication):
+class DProxy(WSGIApplication):
 
     def __init__(self, app, options=None):
         self.options = options or {}
@@ -46,46 +46,50 @@ class DClient(WSGIApplication):
         return self.application
 
 
-def create_app():
-    setup_proxy()
+setup_proxy()
+app = Flask(__name__)
+app.config.from_object(Config)
 
-    app = Flask(__name__)
-    app.config.from_object(Config)
 
-    @app.route('/', methods=['GET', 'POST'])
-    def healthcheck():
-        if request.method == 'GET':
-            return get_healthcheck()
+@app.route('/', methods=['GET', 'POST'])
+def healthcheck():
+    if request.method == 'GET':
+        return get_healthcheck()
 
-    @app.route('/rollout', methods=['POST'])
-    def rollout():
-        if request.method == 'POST':
-            return post_rollout()
 
-    @app.route('/rollback', methods=['POST'])
-    def rollback():
-        if request.method == 'POST':
-            return post_rollback()
+@app.route('/rollout', methods=['POST'])
+def rollout():
+    if request.method == 'POST':
+        return post_rollout()
 
-    @app.route('/versionlock', methods=['POST'])
-    def versionlock():
-        if request.method == 'POST':
-            return post_versionlock()
 
-    return app
+@app.route('/rollback', methods=['POST'])
+def rollback():
+    if request.method == 'POST':
+        return post_rollback()
+
+
+@app.route('/versionlock', methods=['POST'])
+def versionlock():
+    if request.method == 'POST':
+        return post_versionlock()
+
+
+with app.app_context():
+    runner = make_runner(app)
 
 
 if __name__ == "__main__":
     options = {
         "bind": "%s:%s" % ("0.0.0.0", "8002"),
-        "workers": 2,
+        "workers": 4,
         "reload-engine": "auto",
         "spew": False,
         "access-logformat": "%(h)s %(l)s %(u)s %(t)s '%(r)s' %(s)s %(b)s '%(f)s' '%(a)s'",
-        "disable-redirect-access-to-syslog": False,
-        "log-level": "debug",
+        "disable-redirect-access-to-syslog": True,
+        "log-level": "INFO",
         "capture-output": True,
         "worker_class": "sync",
         "timeout": 600
     }
-    DClient(create_app(), options).run()
+    DProxy(app, options).run()

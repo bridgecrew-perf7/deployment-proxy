@@ -53,17 +53,31 @@ paths:
       responses:
         default:
           description: successful operation
-  /upload:
-    post:
-      summary: create an upload
-      operationId: dproxy.controllers.upload.post_upload
+  /server:
+    patch:
+      summary: update server object
+      operationId: dproxy.controllers.server.patch_server
       requestBody:
-        description: Create Upload object
+        description: Patch Server Object
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Upload'
+              $ref: '#/components/schemas/Server'
         required: true
+      responses:
+        default:
+          description: successful operation
+  /server/history:
+    post:
+      summary: post server history
+      operationId: dproxy.controllers.server.post_server_history
+      requestBody:
+        description: Post Server History
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServerHistory'
+        required: True
       responses:
         default:
           description: successful operation
@@ -117,6 +131,51 @@ components:
           type: integer
           example: 1
     RollBack:
+      type: object
+      properties:
+        server_id:
+          type: integer
+          example: 1
+        deployment_id:
+          type: integer
+          example: 1
+        action:
+          type: string
+          example: UPDATE
+        output:
+          type: string
+          example: deployment was successful
+        yum_transaction_id:
+          type: integer
+          example: 1
+        yum_rollback_id:
+          type: integer
+          example: 1
+    Server:
+      type: object
+      properties:
+        hostname:
+          type: string
+          example: my1.test.unifiedlayer.com
+        ip:
+          type: string
+          example: 3.94.46.110
+        url:
+          type: string
+          example: http://hostname/api/1.0.0
+        group_id:
+          type: integer
+          example: 1
+        environment_id:
+          type: integer
+          example: 1
+        created_by:
+          type: string
+          example: jmbushman
+        state:
+          type: string
+          enum: [New, Active, Error, Updating, Disabled]
+    ServerHistory:
       type: object
       properties:
         server_id:
