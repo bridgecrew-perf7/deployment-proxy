@@ -26,7 +26,7 @@ def rollout(self, data):
     logger.info("Starting Rollout for {}".format(data["hostname"]))
     try:
         headers = {"Authorization": "token"}
-        r = requests.post("{}/rollout".format(data["deployment_proxy_url"]), headers=headers, json=data)
+        requests.post("{}/rollout".format(data["deployment_proxy_url"]), headers=headers, json=data)
     except Exception as e:
         logger.error(e)
 
@@ -36,6 +36,6 @@ def rollback(self, data):
     logger.info("Starting Rollback for {}".format(data["hostname"]))
     try:
         headers = {"Authorization": "token"}
-        r = requests.post("{}/rollback".format(data["deployment_proxy_url"]), headers=headers, json=data)
+        requests.post("{}/rollback".format(data["deployment_proxy_url"]), headers=headers, json=data)
     except Exception as e:
         logger.error(e)
