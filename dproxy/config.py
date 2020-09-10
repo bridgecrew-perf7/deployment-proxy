@@ -6,6 +6,8 @@ load_dotenv("/etc/default/dproxy")
 class Config:
     HOSTNAME = os.getenv("HOSTNAME")
     IP = os.getenv("IP")
+    USERNAME = os.getenv("USERNAME")
+    PASSWORD = os.getenv("PASSWORD")
     STATE = os.getenv("STATE")
     GROUP = os.getenv("GROUP")
     ENVIRONMENT = os.getenv("ENVIRONMENT")

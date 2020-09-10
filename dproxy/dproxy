@@ -87,6 +87,12 @@ def versionlock():
         return post_versionlock()
 
 
+@app.route("/update", methods=["POST"])
+def update():
+    if request.method == "POST":
+        return post_update()
+    
+
 with app.app_context():
     runner = make_runner(app)
 
