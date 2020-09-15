@@ -1,7 +1,8 @@
 from dproxy.config import Config
 
-import dbus
-from subprocess import check_output, check_call
+#import dbus
+import sys
+from subprocess import check_output, check_call, Popen
 
 
 def sudo_cmd(cmd, verbose=None):
@@ -21,7 +22,11 @@ def install_pkgs(packages):
 
 
 def restart_service(service):
-    sysbus = dbus.SystemBus()
-    systemd1 = sysbus.get_object("org.freedesktop.systemd1", "/org/freedesktop/systemd1")
-    manager = dbus.Interface(systemd1, "org.freedesktop.systemd1.Manager")
-    manager.RestartUnit(service, "fail")
+    restart = "systemctl restart " + service
+    Popen([sys.executable, restart])
+
+#def restart_service(service):
+#    sysbus = dbus.SystemBus()
+#    systemd1 = sysbus.get_object("org.freedesktop.systemd1", "/org/freedesktop/systemd1")
+#    manager = dbus.Interface(systemd1, "org.freedesktop.systemd1.Manager")
+#    manager.RestartUnit(service, "fail")
