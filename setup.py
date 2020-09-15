@@ -31,8 +31,7 @@ setup(
 	"celery",
 	"redis",
 	"sqlalchemy",
-	"mysqlclient",
-	"mysql-connector-python"
+	"mysql-python"
     ],
     python_requires=">=3.6"
 )
