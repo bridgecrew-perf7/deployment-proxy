@@ -3,23 +3,24 @@ import requests
 from flask import request
 
 from dproxy.config import Config
-from dproxy.tasks.deployment.tasks import rollback
 
 
-def post_rollback():
+def post_register_server():
     data = request.get_json()
 
     try:
-        rollback.apply_async(args=[data])
+        r = requests.post(Config.DEPLOYMENT_SERVER_URL + "/register/server", json=data)
+        resp = r.json()
         response = {
             "status": "success",
-            "message": "Rollback successfully started",
+            "message": "Server successfully registered",
+            "TOKEN": resp["TOKEN"]
         }
         return response, 204
     except Exception as e:
         response = {
             "status": "failure",
-            "message": "Rollback failed to start",
+            "message": "Register server failed",
             "exception": str(e)
         }
         return response, 409

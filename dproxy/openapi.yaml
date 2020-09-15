@@ -53,6 +53,20 @@ paths:
       responses:
         default:
           description: successful operation
+  /register:
+    post:
+      summary: register a new server
+      operationId: dproxy.controllers.register.post_register_server
+      requestBody:
+        description: Create Server object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterServer'
+        required: true
+      responses:
+        default:
+          description: successful operation
   /server:
     patch:
       summary: update server object
@@ -151,6 +165,30 @@ components:
         yum_rollback_id:
           type: integer
           example: 1
+    RegisterServer:
+      type: object
+      properties:
+        hostname:
+          type: string
+          example: my1.test.unifiedlayer.com
+        ip:
+          type: string
+          example: 3.94.46.110
+        created_by:
+          type: string
+          example: dclient
+        state:
+          type: string
+          enum: [NEW, ACTIVE, ERROR, UPDATING, DISABLED]
+        group:
+          type: string
+          example: hp_my
+        environment:
+          type: string
+          example: production
+        location:
+          type: string
+          example: provo1
     Server:
       type: object
       properties:

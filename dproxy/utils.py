@@ -1,7 +1,7 @@
+from dproxy.config import Config
+
 import dbus
 from subprocess import check_output, check_call
-
-from dclient.config import Config
 
 
 def sudo_cmd(cmd, verbose=None):
