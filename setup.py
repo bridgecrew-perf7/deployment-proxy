@@ -29,10 +29,7 @@ setup(
 	"python-dotenv",
 	"authlib",
 	"celery",
-	"redis",
-	"sqlalchemy",
-	"mysql-python",
-	"ConfigParser"
+	"redis"
     ],
     python_requires=">=3.6"
 )
