@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="dproxy",
-    version="0.0.8",
+    version="0.0.9",
     author="Jacob Bushman",
     author_email="jacob.matthew.bushman@endurance.com",
     description="Deployment Proxy API",
@@ -31,7 +31,8 @@ setup(
 	"celery",
 	"redis",
 	"sqlalchemy",
-	"mysql-python"
+	"mysql-python",
+	"ConfigParser"
     ],
     python_requires=">=3.6"
 )
