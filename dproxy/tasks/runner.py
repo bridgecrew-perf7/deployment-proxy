@@ -26,7 +26,7 @@ def make_runner(app):
     )
 
     runner.conf.update(result_expires=3600)
-    runner.autodiscover_tasks(["tasks.deployment", "tasks.update", "tasks.server"])
+    runner.autodiscover_tasks(["dproxy.tasks.deployment", "dproxy.tasks.update", "dproxy.tasks.server"])
 
     class ContextTask(runner.Task):
         def __call__(self, *args, **kwargs):
