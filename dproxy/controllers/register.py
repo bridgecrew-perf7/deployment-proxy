@@ -9,7 +9,7 @@ def post_register_server():
     data = request.get_json()
 
     #try:
-    r = requests.post(Config.DEPLOYMENT_SERVER_URL + "/register/server", json=data)
+    r = requests.post(Config.DEPLOYMENT_API_URI + "/register/server", json=data)
     print(r.content)
     resp = r.json()
     response = {
