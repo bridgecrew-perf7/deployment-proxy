@@ -9,14 +9,14 @@ def post_register_server():
     data = request.get_json()
     print(data)
     #try:
-    r = requests.post(Config.DEPLOYMENT_API_URI + "/register/server", json=data)
-    resp = r.json()
+    #r = requests.post(Config.DEPLOYMENT_API_URI + "/register/server", json=data)
+    #resp = r.json()
     response = {
         "status": "success",
         "message": "Server successfully registered",
-        "TOKEN": resp["TOKEN"]
+        #"TOKEN": resp["TOKEN"]
     }
-    return response, 204
+    return response, 200
     #except Exception as e:
     #    response = {
     #        "status": "failure",
