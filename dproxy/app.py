@@ -22,12 +22,11 @@ if not Config.TOKEN:
         "environment": Config.ENVIRONMENT,
         "url": Config.DEPLOYMENT_PROXY_URI
     }
-    print(data)
     r = requests.post("https://deployment.unifiedlayer.com/api/1.0.0/register/proxy", json=data, verify=False)
     resp = r.json()
-    if "TOKEN" in resp:
+    if "token" in resp:
         with open("/etc/default/dproxy", "a") as file:
-            file.write("TOKEN={}".format(resp["TOKEN"]))
+            file.write("TOKEN={}".format(resp["token"]))
 
 
 app = Flask(__name__)
