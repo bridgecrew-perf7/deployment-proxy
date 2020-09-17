@@ -5,18 +5,11 @@ import sys
 from subprocess import check_output, check_call, Popen
 
 
-def sudo_cmd(cmd, verbose=None):
-    sudo = Config.PASSWORD
-    if verbose:
-        return check_output("echo {} | sudo -S {}".format(sudo, cmd), bufsize=-1, shell=True)
-    else:
-        return check_call("echo {} | sudo -S {}".format(sudo, cmd), bufsize=-1, shell=True)
-
-
 def install_pkgs(packages):
     packages = [x.encode('utf-8') for x in packages]
     packages = ' '.join(packages)
-    stat = sudo_cmd("yum -y install {}".format(packages), verbose=False)
+    check_call("yum clean all", verbose=False)
+    stat = check_call("yum -y --enablerepo=Production install {}".format(packages), verbose=False)
     if stat != 0:
         raise Exception(stat)
 
