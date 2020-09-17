@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="dproxy",
-    version="0.0.1",
+    version="0.2.6",
     author="Jacob Bushman",
     author_email="jacob.matthew.bushman@endurance.com",
     description="Deployment Proxy API",
@@ -25,8 +25,13 @@ setup(
         "python-dotenv",
         "requests",
         "flask",
-        "gunicorn"
+        "gunicorn",
+	"python-dotenv",
+	"authlib",
+	"celery",
+	"redis",
+	"connexion",
+	"swagger-ui-bundle"
     ],
-    scripts=["dproxy/dproxy"],
-    python_requires=">=2.7"
+    python_requires=">=3.6"
 )

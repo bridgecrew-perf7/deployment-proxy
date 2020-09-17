@@ -12,7 +12,7 @@ def post_versionlock():
         "status": "success",
         "message": "Versionlock successfully updated",
     }
-    return response, 204
+    return response, 201
 
 
 def get_versionlock():
@@ -22,4 +22,4 @@ def get_versionlock():
         "message": "Rollback successfully started",
         "versionlock": versionlock
     }
-    return response, 204
+    return response, 200
