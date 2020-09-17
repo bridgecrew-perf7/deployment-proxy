@@ -25,8 +25,13 @@ setup(
         "python-dotenv",
         "requests",
         "flask",
-        "gunicorn"
+        "gunicorn",
+	"python-dotenv",
+	"authlib",
+	"celery",
+	"redis",
+	"connexion",
+	"swagger-ui-bundle"
     ],
-    scripts=["dproxy/dproxy"],
-    python_requires=">=2.7"
+    python_requires=">=3.6"
 )

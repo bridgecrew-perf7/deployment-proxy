@@ -3,7 +3,7 @@ import requests
 from flask import request
 
 from dproxy.config import Config
-from dproxy.tasks.deployment.task import rollout
+from dproxy.tasks.deployment.tasks import rollout
 
 
 def post_rollout():

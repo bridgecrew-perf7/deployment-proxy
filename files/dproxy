@@ -1,8 +1,0 @@
-HOSTNAME="deploy-proxy.hp.provo1.endurancemb.com"
-IP="10.24.246.11"
-USERNAME="deployment"
-PASSWORD=""
-STATE="New"
-ENVIRONMENT="Production"
-LOCATION="Provo"
-DEPLOYMENT_API_URI="https://deployment.unifiedlayer.com/api/1.0.0"

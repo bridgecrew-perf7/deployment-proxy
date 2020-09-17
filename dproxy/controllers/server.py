@@ -1,8 +1,8 @@
+from dproxy.config import Config
+
 import os
 import requests
 from flask import request
-
-from dproxy.config import Config
 
 
 def patch_server():

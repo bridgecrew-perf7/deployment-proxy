@@ -1,0 +1,29 @@
+SECRET_KEY=6PV^cb&3DUHQ%98fxqryoNJ3Y0HNy1G^g@8NPgIV$jj*U2nuPB^C!C5xby$CATs*I!tUEZZ!e7ooeTiGzIiV#%j%DCWS3hpWLetS
+HOSTNAME=deploy-proxy.hp.provo1.endurancemb.com
+IP=10.24.246.11
+USERNAME=deployment
+PASSWORD=I9B2cN%ZY#E#cNj*
+STATE=New
+ENVIRONMENT=Production
+LOCATION=Provo
+DEPLOYMENT_API_URI=https://deployment.unifiedlayer.com/api/1.0.0
+
+CELERY_BROKER_URL=redis://localhost:6379/0
+CELERY_RESULT_BACKEND=db+mysql://dproxy:0fV@36TjUrpe%MXP@localhost/dproxy
+CELERY_TASK_SERIALIZER=json
+CELERY_RESULT_SERIALIZER=json
+CELERY_ACCEPT_CONTENT=["json","application/text"]
+CELERY_TIMEZONE=UTC
+CELERY_UTC=True
+
+CELERYD_NODES=worker1 worker2 worker3 worker4
+CELERY_BIN=/opt/deployment/.pyenv/shims/celery
+CELERY_APP=dproxy.runner.runner:app
+CELERYD_CHDIR=/opt/deployment/
+CELERYD_OPTS=--time-limit=300 --concurrency=8
+CELERYD_LOG_LEVEL=INFO
+CELERYD_LOG_FILE=/var/log/celery/%n%I.log
+CELERYD_PID_FILE=/var/run/celery/%n.pid
+CELERYD_USER=deployment
+CELERYD_GROUP=deployment
+CELERY_CREATE_DIRS=1
