@@ -42,30 +42,37 @@ pipeline {
         sh"sudo -u mirroradmin cp dist/*.noarch.rpm /var/www/html/mirrors/production/centos7/noarch/"
       }
     }
-    stage("Sign RPM") {
+    stage('Sign RPM') {
       steps {
-        script {
-          try {
-            String requestBody = common.v2.HttpsRequest.toJson([
-              "elver": "7",
-              "repo": "production",
-              "arch": "noarch",
-              "rpm": "${env.BINARY_RPM}" ])
-              def request = new common.v2.HttpsRequest(this,
-                "http://primemirror.unifiedlayer.com:8001/sign", "POST",
-                ["contentType": "APPLICATION_JSON"], requestBody)
-              def response = request.doHttpsRequest()
-              if (response.getStatus() != 200) {
-                echo response.getContent()
-                error ("PrimeMirror API sign call failed.")
-              }
-              else {
-                currentBuild.result = "SUCCESS";
-              }
+          script {
+            try {
+                String requestBody = common.v2.HttpsRequest.toJson([
+                    'elver':        "7",
+                    'repo':         "alpha",
+                    'arch':         "${env.ARCH_STR}",
+                    'rpm':          "${env.BINARY_RPM}" ])
+                def request = new common.v2.HttpsRequest(this,
+                    'http://primemirror.unifiedlayer.com:8001/sign', "POST",
+                    ['contentType': 'APPLICATION_JSON'], requestBody)
+                def response = request.doHttpsRequest()
+                if (response.getStatus() != 200) {
+                    echo response.getContent()
+                    error ('PrimeMirror API sign call failed.')
+                }
+                else {
+                    currentBuild.result = 'SUCCESS';
+                }
+            }
+            catch (Exception err) {
+                currentBuild.result = 'FAILURE';
+            }
           }
-          catch (Exception err) {
-            currentBuild.result = "FAILURE";
-          }
+      }
+    }
+    stage('Update yum repo metadata') {
+      steps {
+        dir("${WORKSPACE}/${PKG_NAME}"){
+          sh "sudo -u mirroradmin createrepo --update /var/www/html/production/centos7/"
         }
       }
     }
