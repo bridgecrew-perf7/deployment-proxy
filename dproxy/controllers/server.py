@@ -11,14 +11,18 @@ logger = get_logger()
 def patch_server():
     data = request.get_json()
 
-    r = requests.patch(Config.DEPLOYMENT_API_URI + "/server/hostname/" + data["hostname"], json=data)
+    cookies = {"access_token_cookie": request.headers["Authorization"]}
+    r = requests.patch(Config.DEPLOYMENT_API_URI + "/server/hostname/" + data["hostname"], cookies=cookies, json=data)
     resp = r.json()
+    logger.info(resp)
     return resp, 201
 
 
 def post_server_history():
     data = request.get_json()
 
-    r = requests.post(Config.DEPLOYMENT_API_URI + "/server/history", json=data)
+    cookies = {"access_token_cookie": request.headers["Authorization"]}
+    r = requests.post(Config.DEPLOYMENT_API_URI + "/server/history", cookies=cookies, json=data)
     resp = r.json()
+    logger.info(resp)
     return resp, 201
