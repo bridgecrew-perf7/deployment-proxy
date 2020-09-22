@@ -6,9 +6,9 @@ from dproxy.config import Config
 from dproxy.config import get_logger
 logger = get_logger
 
+
 def post_register_server():
     data = request.get_json()
-    print(data)
     try:
         r = requests.post(Config.DEPLOYMENT_API_URI + "/register/server", json=data)
         logger.debug(r.content)

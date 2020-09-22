@@ -26,7 +26,7 @@ if not Config.TOKEN:
     r = requests.post("https://deployment.unifiedlayer.com/api/1.0.0/register/proxy", json=data, verify=False)
     resp = r.json()
     if "token" in resp:
-        with open("/etc/default/dproxy", "a") as file:
+        with open(".env", "a") as file:
             file.write("TOKEN={}".format(resp["token"]))
 
 flask_app = connexion.FlaskApp(__name__)
