@@ -1,25 +1,24 @@
 from dproxy.config import Config
+from dproxy.config import get_logger
 
 import os
 import requests
 from flask import request
 
+logger = get_logger()
+
 
 def patch_server():
     data = request.get_json()
-    
-    response = {
-        "status": "success",
-        "message": "Server successfully patched",
-    }
-    return response, 204
+
+    r = requests.patch(Config.DEPLOYMENT_API_URI + "/server", json=data)
+    resp = r.json()
+    return resp, 201
 
 
 def post_server_history():
     data = request.get_json()
 
-    response = {
-        "status": "success",
-        "message": "Server History successfully updated",
-    }
-    return response, 204
+    r = requests.post(Config.DEPLOYMENT_API_URI + "/server/history", json=data)
+    resp = r.json()
+    return resp, 201
