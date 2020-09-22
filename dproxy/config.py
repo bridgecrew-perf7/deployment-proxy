@@ -1,4 +1,5 @@
 import os
+import logging
 
 if os.path.exists(".env"):
     from dotenv import load_dotenv
@@ -24,3 +25,19 @@ class Config(object):
     CELERY_ACCEPT_CONTENT = os.getenv("CELERY_ACCEPT_CONTENT")
     CELERY_TIMEZONE = os.getenv("CELERY_TIMEZONE")
     CELERY_UTC = os.getenv("CELERY_UTC")
+
+
+def get_logger():
+    logger = logging.getLogger("bhdapi")
+    logger.setLevel(logging.DEBUG)
+    fh = logging.FileHandler("/opt/deployment/proxy/dproxy.log")
+    fh.setLevel(logging.DEBUG)
+    ch = logging.StreamHandler()
+    ch.setLevel(logging.ERROR)
+    formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+    ch.setFormatter(formatter)
+    fh.setFormatter(formatter)
+    logger.addHandler(ch)
+    logger.addHandler(fh)
+    return logger
+
