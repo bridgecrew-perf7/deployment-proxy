@@ -13,7 +13,7 @@ def post_register_server():
         response = {
             "status": "success",
             "message": "Server successfully registered",
-            "TOKEN": resp["token"]
+            "token": resp["token"]
         }
         return response, 200
     except Exception as e:
