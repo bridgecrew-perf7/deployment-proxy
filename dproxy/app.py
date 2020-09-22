@@ -1,6 +1,6 @@
 #!/usr/bin/python3
-
 from dproxy.config import Config
+from dproxy.config import update_env
 from dproxy.tasks.runner import make_runner
 from dproxy.controllers.rollout import post_rollout
 from dproxy.controllers.rollback import post_rollback
@@ -26,9 +26,10 @@ if not Config.TOKEN:
     r = requests.post("https://deployment.unifiedlayer.com/api/1.0.0/register/proxy", json=data, verify=False)
     resp = r.json()
     if "token" in resp:
-        with open(".env", "a") as file:
-            file.write("TOKEN={}".format(resp["token"]))
-
+        update_env("TOKEN", resp["token"])
+        update_env("STATE", "ACTIVE")
+        
+        
 flask_app = connexion.FlaskApp(__name__)
 flask_app.add_api("openapi.yaml", validate_responses=True, strict_validation=True)
 app = flask_app.app

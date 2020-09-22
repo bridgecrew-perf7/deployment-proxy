@@ -1,17 +1,15 @@
 from dproxy.config import Config
 
-#import dbus
 import sys
 from subprocess import check_output, check_call, Popen
 
 
-def sudo_cmd(cmd, verbose=None):
-    sudo = Config.PASSWORD
-    if verbose:
-        return check_output("echo {} | sudo -S {}".format(sudo, cmd), bufsize=-1, shell=True)
-    else:
-        return check_call("echo {} | sudo -S {}".format(sudo, cmd), bufsize=-1, shell=True)
+class LastUpdated(OrderedDict):
 
+    def __setitem__(self, key, value):
+        super().__setitem__(key, value)
+        self.move_to_end(key)
+        
 
 def install_pkgs(packages):
     packages = [x.encode('utf-8') for x in packages]
@@ -25,8 +23,16 @@ def restart_service(service):
     restart = "systemctl restart " + service
     Popen([sys.executable, restart])
 
-#def restart_service(service):
-#    sysbus = dbus.SystemBus()
-#    systemd1 = sysbus.get_object("org.freedesktop.systemd1", "/org/freedesktop/systemd1")
-#    manager = dbus.Interface(systemd1, "org.freedesktop.systemd1.Manager")
-#    manager.RestartUnit(service, "fail")
+
+def update_env(key, value):
+    env = LastUpdated()
+    with open(".env") as f:
+        for line in f:
+            (k, v) = line.split("=")
+            env[k] = v
+    env[key] = value
+
+    with open(".env", "w") as f:
+        for k in env.keys():
+            line = "{}={}".format(k, env[k])
+            f.write(line)

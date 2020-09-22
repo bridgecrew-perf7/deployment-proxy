@@ -14,7 +14,6 @@ def patch_server():
     cookies = {"access_token_cookie": request.headers["Authorization"]}
     r = requests.patch(Config.DEPLOYMENT_API_URI + "/server/hostname/" + data["hostname"], cookies=cookies, json=data)
     resp = r.json()
-    logger.info(resp)
     return resp, 201
 
 
@@ -24,5 +23,4 @@ def post_server_history():
     cookies = {"access_token_cookie": request.headers["Authorization"]}
     r = requests.post(Config.DEPLOYMENT_API_URI + "/server/history", cookies=cookies, json=data)
     resp = r.json()
-    logger.info(resp)
     return resp, 201
