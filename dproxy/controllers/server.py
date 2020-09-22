@@ -11,7 +11,7 @@ logger = get_logger()
 def patch_server():
     data = request.get_json()
 
-    r = requests.patch(Config.DEPLOYMENT_API_URI + "/server/" + data["hostname"], json=data)
+    r = requests.patch(Config.DEPLOYMENT_API_URI + "/server/hostname/" + data["hostname"], json=data)
     resp = r.json()
     return resp, 201
 
