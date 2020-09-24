@@ -130,7 +130,7 @@ components:
           type: string
           example: 1
         deployment_id:
-          type: integer
+          type: string
           example: 1
         action:
           type: string
