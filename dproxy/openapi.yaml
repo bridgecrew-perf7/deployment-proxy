@@ -127,7 +127,7 @@ components:
       type: object
       properties:
         server_id:
-          type: string
+          type: integer
           example: 1
         deployment_id:
           type: string
@@ -139,10 +139,10 @@ components:
           type: string
           example: deployment was successful
         yum_transaction_id:
-          type: string
+          type: integer
           example: 1
         yum_rollback_id:
-          type: string
+          type: integer
           example: 1
     RollBack:
       type: object

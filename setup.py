@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="dproxy",
-    version="0.2.38",
+    version="0.2.39",
     author="Jacob Bushman",
     author_email="jacob.matthew.bushman@endurance.com",
     description="Deployment Proxy API",
