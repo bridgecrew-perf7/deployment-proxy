@@ -17,6 +17,7 @@ class Config(object):
     TOKEN = os.getenv("TOKEN")
     DEPLOYMENT_PROXY_URI = os.getenv("DEPLOYMENT_PROXY_URI")
     DEPLOYMENT_API_URI = os.getenv("DEPLOYMENT_API_URI")
+    ENV = os.getenv("ENV")
 
     CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL")
     CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND")
@@ -30,7 +31,7 @@ class Config(object):
 def get_logger():
     logger = logging.getLogger("bhdapi")
     logger.setLevel(logging.DEBUG)
-    fh = logging.FileHandler("/opt/deployment/proxy/dproxy.log")
+    fh = logging.FileHandler("/var/log/deployment/dproxy.log")
     fh.setLevel(logging.DEBUG)
     ch = logging.StreamHandler()
     ch.setLevel(logging.ERROR)

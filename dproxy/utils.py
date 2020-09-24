@@ -1,6 +1,7 @@
 from dproxy.config import Config
 
 import sys
+from collections import OrderedDict
 from subprocess import check_output, check_call, Popen
 
 
@@ -34,5 +35,5 @@ def update_env(key, value):
 
     with open(".env", "w") as f:
         for k in env.keys():
-            line = "{}={}".format(k, env[k])
+            line = "{}={}\n".format(k, env[k])
             f.write(line)
