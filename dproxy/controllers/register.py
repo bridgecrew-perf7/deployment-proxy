@@ -3,6 +3,8 @@ import requests
 from flask import request
 
 from dproxy.config import Config
+from dproxy.config import get_logger
+logger = get_logger()
 
 
 def post_register_server():
@@ -13,7 +15,7 @@ def post_register_server():
         response = {
             "status": "success",
             "message": "Server successfully registered",
-            "TOKEN": resp["token"]
+            "token": resp["token"]
         }
         return response, 200
     except Exception as e:

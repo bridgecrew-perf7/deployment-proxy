@@ -212,7 +212,7 @@ components:
           example: jmbushman
         state:
           type: string
-          enum: [New, Active, Error, Updating, Disabled]
+          enum: [NEW, ACTIVE, ERROR, UPDATING, DISABLED]
     ServerHistory:
       type: object
       properties:

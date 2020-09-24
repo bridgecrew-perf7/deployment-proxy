@@ -15,7 +15,7 @@ def post_rollback():
             "status": "success",
             "message": "Rollback successfully started",
         }
-        return response, 204
+        return response, 202
     except Exception as e:
         response = {
             "status": "failure",

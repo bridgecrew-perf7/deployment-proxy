@@ -1,4 +1,5 @@
 import os
+import base64
 import requests
 from flask import request
 
@@ -8,18 +9,15 @@ from dproxy.config import Config
 def post_versionlock():
     data = request.get_json()
 
-    response = {
-        "status": "success",
-        "message": "Versionlock successfully updated",
-    }
-    return response, 201
+    # POST to dclient url
+    r = requests.patch(data["url"] + "/versionlock", json=data)
+    resp = r.json()
+    return resp, 201
 
 
-def get_versionlock():
+def get_versionlock(url):
 
-    response = {
-        "status": "success",
-        "message": "Rollback successfully started",
-        "versionlock": versionlock
-    }
-    return response, 200
+    url = url.decode("ascii")
+    r = requests.patch(url + "/versionlock", json=data)
+    resp = r.json()
+    return resp, 201
