@@ -42,3 +42,9 @@ def get_logger():
     logger.addHandler(fh)
     return logger
 
+
+def get_proxies():
+    proxies = {
+        "http": "http://proxy.hp.provo1.endurancemb.com:3128"
+    }
+    return proxies

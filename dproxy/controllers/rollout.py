@@ -1,11 +1,7 @@
-import os
-import requests
-from flask import request
-
-from dproxy.config import Config
 from dproxy.tasks.deployment.tasks import rollout
-from dproxy.config import get_logger
-logger = get_logger()
+
+import os
+from flask import request
 
 
 def post_rollout():

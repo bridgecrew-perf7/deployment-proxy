@@ -48,7 +48,7 @@ pipeline {
             try {
                 String requestBody = common.v2.HttpsRequest.toJson([
                     'elver':        "7",
-                    'repo':         "alpha",
+                    'repo':         "production",
                     'arch':         "${env.ARCH_STR}",
                     'rpm':          "${env.BINARY_RPM}" ])
                 def request = new common.v2.HttpsRequest(this,

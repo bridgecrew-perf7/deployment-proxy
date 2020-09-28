@@ -1,5 +1,4 @@
 import os
-import requests
 from flask import request
 
 from dproxy.config import Config
@@ -8,7 +7,6 @@ from dproxy.tasks.deployment.tasks import rollback
 
 def post_rollback():
     data = request.get_json()
-
     try:
         rollback.apply_async(args=[data])
         response = {

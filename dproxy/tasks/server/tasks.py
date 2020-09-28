@@ -1,4 +1,4 @@
-from dproxy.config import Config
+from dproxy.config import Config, get_proxies
 
 import requests
 from flask import current_app
@@ -8,22 +8,24 @@ from celery.utils.log import get_task_logger
 logger = get_task_logger(__name__)
 runner = make_runner(current_app)
 
+proxies = get_proxies()
+
 
 @runner.task(bind=True)
 def server(self, data):
-    logger.info("Patching server for {}".format(data["hostname"]))
+    logger.info(f"Patching server for {data['hostname']}")
     try:
-        headers = {"Authorization": Config.TOKEN}
-        requests.post("{}/server".format(Config.DEPLOYMENT_API_URI), headers=headers, json=data)
+        cookies = {"access_token_cookie": request.headers["Authorization"]}
+        requests.post(f"{Config.DEPLOYMENT_API_URI}/server", cookies=cookies, proxies=proxies, json=data)
     except Exception as e:
         logger.error(e)
 
 
 @runner.task(bind=True)
 def server_history(self, data):
-    logger.info("Posting Server History for {}".format(data["hostname"]))
+    logger.info(f"Posting Server History for {data['hostname']}")
     try:
-        headers = {"Authorization": Config.TOKEN}
-        requests.post("{}/server/history".format(Config.DEPLOYMENT_API_URI), headers=headers, json=data)
+        cookies = {"access_token_cookie": request.headers["Authorization"]}
+        requests.post(f"{Config.DEPLOYMENT_API_URI}/server/history", cookies=cookies, proxies=proxies, json=data)
     except Exception as e:
         logger.error(e)

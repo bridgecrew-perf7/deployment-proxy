@@ -15,8 +15,8 @@ class LastUpdated(OrderedDict):
 def install_pkgs(packages):
     packages = [x.encode('utf-8') for x in packages]
     packages = ' '.join(packages)
-    check_call("yum clean all", verbose=False)
-    stat = check_call("yum -y --enablerepo=Production install {}".format(packages), verbose=False)
+    check_call("sudo yum clean all", verbose=False)
+    stat = check_call(f"sudo yum -y install {packages}", verbose=False)
     if stat != 0:
         raise Exception(stat)
 
@@ -37,5 +37,5 @@ def update_env(key, value):
 
     with open(".env", "w") as f:
         for k in env.keys():
-            line = "{}={}\n".format(k, env[k])
+            line = f"{k}={env[k]}\n"
             f.write(line)
