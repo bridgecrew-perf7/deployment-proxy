@@ -1,12 +1,12 @@
 from dproxy.config import Config
 
+import os
 import sys
 from collections import OrderedDict
 from subprocess import check_output, check_call, Popen
 
 
 class LastUpdated(OrderedDict):
-
     def __setitem__(self, key, value):
         super().__setitem__(key, value)
         self.move_to_end(key)
@@ -27,6 +27,7 @@ def restart_service(service):
 
 
 def update_env(key, value):
+    os.environ[key] = value
     env = LastUpdated()
     with open(".env") as f:
         for line in f:

@@ -2,11 +2,6 @@
 from dproxy.utils import update_env
 from dproxy.tasks.runner import make_runner
 from dproxy.config import Config, get_logger
-from dproxy.controllers.rollout import post_rollout
-from dproxy.controllers.rollback import post_rollback
-from dproxy.controllers.versionlock import post_versionlock
-from dproxy.controllers.healthcheck import get_healthcheck
-from dproxy.controllers.server import patch_server, post_server_history
 
 import requests
 import connexion
@@ -25,7 +20,7 @@ if not Config.TOKEN:
         "environment": Config.ENVIRONMENT,
         "url": Config.DEPLOYMENT_PROXY_URI
     }
-    r = requests.post("https://deployment.unifiedlayer.com/api/1.0.0/register/proxy", json=data, verify=False)
+    r = requests.post("{}/register/proxy".format(Config.DEPLOYMENT_API_URI), json=data, verify=False)
     resp = r.json()
     logger.info(resp)
     if "token" in resp:
