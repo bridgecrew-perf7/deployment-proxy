@@ -11,7 +11,6 @@ proxies = get_proxies()
 
 def patch_server():
     data = request.get_json()
-
     cookies = {"access_token_cookie": request.headers["Authorization"]}
     r = requests.patch(f"{Config.DEPLOYMENT_API_URI}/server/hostname/{data['hostname']}", proxies=proxies, 
                        cookies=cookies, json=data)
