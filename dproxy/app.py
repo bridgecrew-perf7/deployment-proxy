@@ -20,7 +20,7 @@ if not Config.TOKEN:
         "environment": Config.ENVIRONMENT,
         "url": Config.DEPLOYMENT_PROXY_URI
     }
-    r = requests.post("{}/register/proxy".format(Config.DEPLOYMENT_API_URI), proxies=proxies, json=data, verify=False)
+    r = requests.post(f"{Config.DEPLOYMENT_API_URI}/register/proxy", proxies=proxies, json=data, verify=False)
     resp = r.json()
     if "token" in resp:
         update_env("STATE", "ACTIVE")

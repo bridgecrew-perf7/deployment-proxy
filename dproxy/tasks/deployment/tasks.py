@@ -25,8 +25,7 @@ def health_check(hosts):
 def rollout(self, data):
     logger.info(f"Starting Rollout for {data['hostname']}")
     try:
-        headers = {"Authorization": "token"}
-        requests.post(f"{data['url']}/rollout", headers=headers, json=data)
+        requests.post(f"{data['url']}/rollout", json=data)
     except Exception as e:
         logger.error(e)
 
@@ -35,7 +34,6 @@ def rollout(self, data):
 def rollback(self, data):
     logger.info(f"Starting Rollback for {data['hostname']}")
     try:
-        headers = {"Authorization": "token"}
-        requests.post(f"{data['url']}/rollback", headers=headers, json=data)
+        requests.post(f"{data['url']}/rollback", json=data)
     except Exception as e:
         logger.error(e)

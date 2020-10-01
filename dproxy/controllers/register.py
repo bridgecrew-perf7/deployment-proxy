@@ -11,7 +11,7 @@ proxies = get_proxies()
 def post_register_server():
     data = request.get_json()
     try:
-        r = requests.post(f"{Config.DEPLOYMENT_API_URI}/register/server", proxies=proxies, json=data)
+        r = requests.post(f"{Config.DEPLOYMENT_API_URI}/register/server", proxies=proxies, json=data, verify=False)
         resp = r.json()
         response = {
             "status": "success",
