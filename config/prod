@@ -1,15 +1,13 @@
 SECRET_KEY=6PV^cb&3DUHQ%98fxqryoNJ3Y0HNy1G^g@8NPgIV$jj*U2nuPB^C!C5xby$CATs*I!tUEZZ!e7ooeTiGzIiV#%j%DCWS3hpWLetS
 HOSTNAME=deploy-proxy.hp.provo1.endurancemb.com
 IP=10.24.246.11
-USERNAME=deployment
-PASSWORD=I9B2cN%ZY#E#cNj*
-STATE=New
-ENVIRONMENT=Production
-LOCATION=Provo
+STATE=NEW
+ENVIRONMENT=PRODUCTION
+LOCATION=PROVO
 DEPLOYMENT_API_URI=https://deployment.unifiedlayer.com/api/1.0.0
 
 CELERY_BROKER_URL=redis://localhost:6379/0
-CELERY_RESULT_BACKEND=db+mysql://dproxy:0fV@36TjUrpe%MXP@localhost/dproxy
+CELERY_RESULT_BACKEND=redis://localhost:6379/0
 CELERY_TASK_SERIALIZER=json
 CELERY_RESULT_SERIALIZER=json
 CELERY_ACCEPT_CONTENT=["json","application/text"]
