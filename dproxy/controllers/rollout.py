@@ -8,12 +8,9 @@ from celery import signature
 
 
 def post_rollout():
-    data = request.get_json()
+    inventory = request.get_json()
     try:
-        tasks = []
-        for host in data:
-            tasks.append(rollout.s(host))
-        Watcher(tasks)
+        Watcher("rollout", inventory)
         response = {
             "status": "success",
             "message": "Rollout successfully started",

@@ -15,6 +15,7 @@ def make_runner(app):
         accept_content=Config.CELERY_ACCEPT_CONTENT,
         timezone=Config.CELERY_TIMEZONE,
         enable_utc=Config.CELERY_UTC,
+        task_default_queue="dproxy",
         database_table_schemas={
             'task': 'celery',
             'group': 'celery',

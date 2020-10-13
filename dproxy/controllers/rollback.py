@@ -3,12 +3,16 @@ from flask import request
 
 from dproxy.config import Config
 from dproxy.tasks.deployment.tasks import rollback
+from dproxy.tasks.watcher import Watcher
 
 
 def post_rollback():
-    data = request.get_json()
+    inventory = request.get_json()
     try:
-        rollback.apply_async(args=[data])
+        tasks = []
+        for host in inventory["hosts"]:
+            tasks.append(rollback.s(host))
+        Watcher(tasks)
         response = {
             "status": "success",
             "message": "Rollback successfully started",
