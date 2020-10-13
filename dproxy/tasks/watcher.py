@@ -1,10 +1,9 @@
 from dproxy.tasks.deployment.tasks import rollout, rollback, complete
 from dproxy.tasks.update.tasks import server_update
-from celery.utils.log import get_task_logger
 
-from celery import group
 from threading import Thread
-from celery.task import chord
+from celery import chord
+from celery.utils.log import get_task_logger
 
 logger = get_task_logger(__name__)
 

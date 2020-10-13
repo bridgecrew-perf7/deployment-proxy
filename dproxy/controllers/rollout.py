@@ -3,8 +3,6 @@ from dproxy.tasks.watcher import Watcher
 
 import os
 from flask import request
-from celery.task import task
-from celery import signature
 
 
 def post_rollout():
