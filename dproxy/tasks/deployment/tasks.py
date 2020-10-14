@@ -1,4 +1,3 @@
-from dproxy.config import Config, get_proxies
 from dproxy.tasks.runner import make_runner
 
 import requests
@@ -8,7 +7,6 @@ from celery.utils.log import get_task_logger
 
 logger = get_task_logger(__name__)
 runner = make_runner(current_app)
-proxies = get_proxies()
 
 
 def health_check(hosts):
@@ -47,8 +45,4 @@ def rollback(self, data=None, callback=None):
 def complete(self, results, deployment_id=None):
     logger.info("TASKS COMPLETED", results)
     cookies = {"access_token_cookie": Config.TOKEN}
-    if Config.USE_PROXIES:
-        requests.post(f"{Config.DEPLOYMENT_API_URI}/deployment/results/{deployment_id}", cookies=cookies, 
-                      proxies=proxies, json=results)
-    else:
-        requests.post(f"{Config.DEPLOYMENT_API_URI}/deployment/results/{deployment_id}", cookies=cookies, json=results)
+    requests.post(f"{Config.DEPLOYMENT_API_URI}/deployment/results/{deployment_id}", cookies=cookies, json=results)

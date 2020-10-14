@@ -16,5 +16,7 @@ celery = "*"
 redis = "*"
 connexion = "*"
 swagger-ui-bundle = "*"
+devpi = "*"
+
 [requires]
 python_version = "3.8"

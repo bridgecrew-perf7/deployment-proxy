@@ -1,5 +1,3 @@
-from dproxy.config import get_proxies
-
 import os
 import base64
 import requests

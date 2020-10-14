@@ -1,4 +1,3 @@
-from dproxy.config import get_proxies
 from dproxy.tasks.runner import make_runner
 from dproxy.utils import install_pkgs, restart_service
 
@@ -7,7 +6,6 @@ import requests
 from flask import current_app, jsonify
 from celery.utils.log import get_task_logger
 
-proxies = get_proxies()
 logger = get_task_logger(__name__)
 runner = make_runner(current_app)
 
