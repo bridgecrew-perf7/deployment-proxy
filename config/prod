@@ -5,6 +5,7 @@ STATE=NEW
 ENVIRONMENT=PRODUCTION
 LOCATION=PROVO
 DEPLOYMENT_API_URI=https://deployment.unifiedlayer.com/api/1.0.0
+ENV_FILE=/etc/default/dproxy
 
 CELERY_BROKER_URL=redis://localhost:6379/0
 CELERY_RESULT_BACKEND=redis://localhost:6379/0
