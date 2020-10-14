@@ -1,14 +1,14 @@
 #!/usr/bin/python3
 from dproxy.utils import update_env
 from dproxy.tasks.runner import make_runner
-from dproxy.config import Config, get_logger, get_proxies
+from dproxy.config import Config, get_logger
 
+import os
 import requests
 import connexion
 from flask import Flask, request
 
 logger = get_logger()
-proxies = get_proxies()
 
 if not Config.TOKEN:
     data = {
@@ -20,12 +20,14 @@ if not Config.TOKEN:
         "environment": Config.ENVIRONMENT,
         "url": Config.DEPLOYMENT_PROXY_URI
     }
-    r = requests.post(f"{Config.DEPLOYMENT_API_URI}/register/proxy", proxies=proxies, json=data, verify=False)
+    r = requests.post("{}/register/proxy".format(Config.DEPLOYMENT_API_URI), json=data, verify=False)
     resp = r.json()
+    logger.info(resp)
     if "token" in resp:
         update_env("STATE", "ACTIVE")
         update_env("TOKEN", resp["token"])
-
+        os.environ["STATE"] = "ACTIVE"
+        os.environ["TOKEN"] = resp["token"]
         
 flask_app = connexion.FlaskApp(__name__)
 flask_app.add_api("openapi.yaml", validate_responses=True, strict_validation=True)

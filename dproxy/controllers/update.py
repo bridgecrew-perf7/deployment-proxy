@@ -1,5 +1,6 @@
 from dproxy.config import Config
 from dproxy.tasks.update.tasks import server_update
+from dproxy.tasks.watcher import Watcher
 
 import os
 import requests
@@ -7,17 +8,17 @@ from flask import request
 
 
 def post_update():
-    data = request.get_json()
+    inventory = request.get_json()
     try:
-        if data["hostname"] == Config.HOSTNAME:
+        if "hosts" in inventory:
+            Watcher("server_update", inventory)
+        elif "hostname" in data and data["hostname"] == Config.HOSTNAME:
             proxy_update.apply_async(args=[data])
-        else:
-            server_update.apply_async(args=[data])
         response = {
             "status": "success",
             "message": "Server update started",
         }
-        return response, 204
+        return response, 202
     except Exception as e:
         response = {
             "status": "failure",

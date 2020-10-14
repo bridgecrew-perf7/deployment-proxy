@@ -1,16 +1,22 @@
 [[source]]
 name = "pypi"
-url = "https://pypi.python.org/simple"
+url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
 pytest = "*"
-pytest-cov = "*"
 
 [packages]
-dproxy = {editable = true, path = "."}
-devpi-client = "*"
+requests = "*"
+flask = "*"
+gunicorn = "*"
+python-dotenv = "*"
+authlib = "*"
+celery = "*"
+redis = "*"
 connexion = "*"
+swagger-ui-bundle = "*"
+devpi = "*"
 
 [requires]
-python_version = "3.6"
+python_version = "3.8"

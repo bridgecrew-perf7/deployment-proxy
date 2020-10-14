@@ -29,13 +29,16 @@ def restart_service(service):
 def update_env(key, value):
     os.environ[key] = value
     env = LastUpdated()
-    with open(".env") as f:
+    with open(Config.ENV_FILE) as f:
         for line in f:
-            (k, v) = line.split("=")
+            (k, v) = line.split("=", 1)
             env[k] = v
     env[key] = value
 
-    with open(".env", "w") as f:
+    with open(Config.ENV_FILE, "w") as f:
         for k in env.keys():
-            line = f"{k}={env[k]}\n"
-            f.write(line)
+            line = f"{k}={env[k]}"
+            if "\n" in line:
+                f.write(line)
+            else:
+                f.write(line+"\n")

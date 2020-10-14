@@ -1,13 +1,14 @@
 from dproxy.tasks.deployment.tasks import rollout
+from dproxy.tasks.watcher import Watcher
 
 import os
 from flask import request
 
 
 def post_rollout():
-    data = request.get_json()
+    inventory = request.get_json()
     try:
-        rollout.apply_async(args=[data])
+        Watcher("rollout", inventory)
         response = {
             "status": "success",
             "message": "Rollout successfully started",

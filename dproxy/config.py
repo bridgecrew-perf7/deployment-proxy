@@ -1,9 +1,9 @@
 import os
 import logging
+from dotenv import load_dotenv
 
-if os.path.exists(".env"):
-    from dotenv import load_dotenv
-    load_dotenv(".env")
+ENV_FILE = os.getenv("ENV_FILE")
+load_dotenv(ENV_FILE)
 
 
 class Config(object):
@@ -17,8 +17,8 @@ class Config(object):
     TOKEN = os.getenv("TOKEN")
     DEPLOYMENT_PROXY_URI = os.getenv("DEPLOYMENT_PROXY_URI")
     DEPLOYMENT_API_URI = os.getenv("DEPLOYMENT_API_URI")
-    ENV = os.getenv("ENV")
-
+    ENV_FILE = os.getenv("ENV_FILE")
+    
     CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL")
     CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND")
     CELERY_TASK_SERIALIZER = os.getenv("CELERY_TASK_SERIALIZER")
@@ -41,10 +41,3 @@ def get_logger():
     logger.addHandler(ch)
     logger.addHandler(fh)
     return logger
-
-
-def get_proxies():
-    proxies = {
-        "http": "http://proxy.hp.provo1.endurancemb.com:3128"
-    }
-    return proxies
