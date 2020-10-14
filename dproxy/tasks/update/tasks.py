@@ -1,3 +1,4 @@
+from dproxy.config import get_proxies
 from dproxy.tasks.runner import make_runner
 from dproxy.utils import install_pkgs, restart_service, sudo_cmd
 
@@ -6,16 +7,16 @@ import requests
 from flask import current_app, jsonify
 from celery.utils.log import get_task_logger
 
+proxies = get_proxies()
 logger = get_task_logger(__name__)
 runner = make_runner(current_app)
 
 
 @runner.task(bind=True)
 def server_update(self, data):
-    logger.info("Starting Update for {}".format(data["hostname"]))
+    logger.info(f"Starting Update for {data['hostname']}")
     try:
-        headers = {"Authorization": "token"}
-        r = requests.post("{}/update".format(data["url"]), headers=headers, json=data)
+        r = requests.post(f"{data['url']}/update", proxies=proxies, json=data)
         return jsonify(r.get_json())
     except Exception as e:
         logger.error(e)
@@ -23,10 +24,10 @@ def server_update(self, data):
 
 @runner.task(bind=True)
 def proxy_update(self, data):
-    logger.info("Starting Update for {}".format(data["hostname"]))
+    logger.info(f"Starting Update for {data['hostname']}")
     try:
         for pkg in data["versionlock"]:
-            sudo_cmd("yum versionlock add {}".format(pkg))
+            os.system(f"sudo yum versionlock add {pkg}")
         install_pkgs(data["versionlock"])
         restart_service("dproxy.service")
     except Exception as e:

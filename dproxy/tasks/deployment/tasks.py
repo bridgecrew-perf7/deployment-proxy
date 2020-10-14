@@ -13,7 +13,7 @@ def health_check(hosts):
         status_codes = []
         for host in hosts:
             payload = {"hostname": host["hostname"], "healthcheck": "good"}
-            r = requests.post(host["url"]+"/healthcheck", json=payload)
+            r = requests.post(f"{host['url']}/healthcheck", json=payload)
             status_codes.append({"hostname": host["hostname"], "status": r.status_code})
         return status_codes
     except Exception as e:
@@ -23,19 +23,17 @@ def health_check(hosts):
 
 @runner.task(bind=True)
 def rollout(self, data):
-    logger.info("Starting Rollout for {}".format(data["hostname"]))
+    logger.info(f"Starting Rollout for {data['hostname']}")
     try:
-        headers = {"Authorization": "token"}
-        requests.post("{}/rollout".format(data["deployment_proxy_url"]), headers=headers, json=data)
+        requests.post(f"{data['url']}/rollout", json=data)
     except Exception as e:
         logger.error(e)
 
 
 @runner.task(bind=True)
 def rollback(self, data):
-    logger.info("Starting Rollback for {}".format(data["hostname"]))
+    logger.info(f"Starting Rollback for {data['hostname']}")
     try:
-        headers = {"Authorization": "token"}
-        requests.post("{}/rollback".format(data["deployment_proxy_url"]), headers=headers, json=data)
+        requests.post(f"{data['url']}/rollback", json=data)
     except Exception as e:
         logger.error(e)

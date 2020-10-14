@@ -1,14 +1,11 @@
-import os
-import requests
-from flask import request
-
-from dproxy.config import Config
 from dproxy.tasks.deployment.tasks import rollout
+
+import os
+from flask import request
 
 
 def post_rollout():
     data = request.get_json()
-
     try:
         rollout.apply_async(args=[data])
         response = {

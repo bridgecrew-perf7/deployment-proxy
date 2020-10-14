@@ -3,14 +3,15 @@ import requests
 from flask import request
 
 from dproxy.config import Config
-from dproxy.config import get_logger
+from dproxy.config import get_logger, get_proxies
 logger = get_logger()
+proxies = get_proxies()
 
 
 def post_register_server():
     data = request.get_json()
     try:
-        r = requests.post(Config.DEPLOYMENT_API_URI + "/register/server", json=data)
+        r = requests.post(f"{Config.DEPLOYMENT_API_URI}/register/server", proxies=proxies, json=data, verify=False)
         resp = r.json()
         response = {
             "status": "success",
