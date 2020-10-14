@@ -18,6 +18,7 @@ class Config(object):
     DEPLOYMENT_PROXY_URI = os.getenv("DEPLOYMENT_PROXY_URI")
     DEPLOYMENT_API_URI = os.getenv("DEPLOYMENT_API_URI")
     ENV = os.getenv("ENV")
+    USE_PROXIES = os.getenv("USE_PROXIES")
 
     CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL")
     CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND")

@@ -16,8 +16,7 @@ runner = make_runner(current_app)
 def server_update(self, data):
     logger.info(f"Starting Update for {data['hostname']}")
     try:
-        cookies = {"access_token_cookie": request.headers["Authorization"]}
-        r = requests.post(f"{data['url']}/update", cookies=cookies, json=data)
+        r = requests.post(f"{data['url']}/update", json=data)
         return jsonify(r.get_json())
     except Exception as e:
         logger.error(e)

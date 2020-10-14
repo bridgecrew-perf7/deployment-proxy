@@ -47,4 +47,8 @@ def rollback(self, data=None, callback=None):
 def complete(self, results, deployment_id=None):
     logger.info("TASKS COMPLETED", results)
     cookies = {"access_token_cookie": Config.TOKEN}
-    requests.post(f"{Config.DEPLOYMENT_API_URI}/deployment/results/{deployment_id}", cookies=cookies, json=results)
+    if Config.USE_PROXIES:
+        requests.post(f"{Config.DEPLOYMENT_API_URI}/deployment/results/{deployment_id}", cookies=cookies, 
+                      proxies=proxies, json=results)
+    else:
+        requests.post(f"{Config.DEPLOYMENT_API_URI}/deployment/results/{deployment_id}", cookies=cookies, json=results)
