@@ -1,9 +1,12 @@
 import os
 import logging
+from dotenv import load_dotenv
 
-if os.path.exists(".env"):
-    from dotenv import load_dotenv
+PROXY_ENV = os.getenv("PROXY_ENV")
+if PROXY_ENV == "development":
     load_dotenv(".env")
+else:
+    load_dotenv("/etc/default/dproxy")
 
 
 class Config(object):
@@ -17,7 +20,6 @@ class Config(object):
     TOKEN = os.getenv("TOKEN")
     DEPLOYMENT_PROXY_URI = os.getenv("DEPLOYMENT_PROXY_URI")
     DEPLOYMENT_API_URI = os.getenv("DEPLOYMENT_API_URI")
-    ENV = os.getenv("ENV")
 
     CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL")
     CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND")
