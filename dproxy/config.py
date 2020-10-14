@@ -3,10 +3,7 @@ import logging
 from dotenv import load_dotenv
 
 ENV_FILE = os.getenv("ENV_FILE")
-if PROXY_ENV == "development":
-    load_dotenv(ENV_FILE)
-else:
-    load_dotenv(ENV_FILE)
+load_dotenv(ENV_FILE)
 
 
 class Config(object):
