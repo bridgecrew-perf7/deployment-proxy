@@ -20,7 +20,7 @@ if not Config.TOKEN:
         "environment": Config.ENVIRONMENT,
         "url": Config.DEPLOYMENT_PROXY_URI
     }
-    r = requests.post("{}/register/proxy".format(Config.DEPLOYMENT_API_URI), json=data)
+    r = requests.post("{}/register/proxy".format(Config.DEPLOYMENT_API_URI), json=data, verify=False)
     resp = r.json()
     logger.info(resp)
     if "token" in resp:
