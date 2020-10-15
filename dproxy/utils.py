@@ -2,15 +2,31 @@ from dproxy.config import Config
 
 import os
 import sys
+import requests
 from collections import OrderedDict
+from requests.adapters import HTTPAdapter
 from subprocess import check_output, check_call, Popen
+from requests.packages.urllib3.util.retry import Retry
 
 
 class LastUpdated(OrderedDict):
     def __setitem__(self, key, value):
         super().__setitem__(key, value)
         self.move_to_end(key)
-        
+
+
+def get_http():
+    retry_strategy = Retry(
+        total=Config.RETRY,
+        status_forcelist=[429, 500, 502, 503, 504],
+        method_whitelist=["HEAD", "GET", "OPTIONS"]
+    )
+    adapter = HTTPAdapter(max_retries=retry_strategy)
+    http = requests.Session()
+    http.mount("https://", adapter)
+    http.mount("http://", adapter)
+    return http
+
 
 def install_pkgs(packages):
     packages = [x.encode('utf-8') for x in packages]

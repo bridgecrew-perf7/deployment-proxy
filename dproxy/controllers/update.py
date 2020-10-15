@@ -3,7 +3,6 @@ from dproxy.tasks.update.tasks import server_update
 from dproxy.tasks.watcher import Watcher
 
 import os
-import requests
 from flask import request
 
 

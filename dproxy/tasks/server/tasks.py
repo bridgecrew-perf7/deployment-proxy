@@ -1,3 +1,5 @@
+from dproxy.utils import get_http
+
 import requests
 from flask import current_app
 from dproxy.tasks.runner import make_runner
@@ -11,7 +13,8 @@ def server(self, data):
     logger.info(f"Patching server for {data['hostname']}")
     try:
         cookies = {"access_token_cookie": request.headers["Authorization"]}
-        requests.post(f"{Config.DEPLOYMENT_API_URI}/server", cookies=cookies, json=data, verify=False)
+        http = get_http
+        http.post(f"{Config.DEPLOYMENT_API_URI}/server", cookies=cookies, json=data, verify=False)
     except Exception as e:
         logger.error(e)
 
@@ -21,6 +24,7 @@ def server_history(self, data):
     logger.info(f"Posting Server History for {data['hostname']}")
     try:
         cookies = {"access_token_cookie": request.headers["Authorization"]}
-        requests.post(f"{Config.DEPLOYMENT_API_URI}/server/history", cookies=cookies, json=data, verify=False)
+        http = get_http
+        http.post(f"{Config.DEPLOYMENT_API_URI}/server/history", cookies=cookies, json=data, verify=False)
     except Exception as e:
         logger.error(e)

@@ -1,4 +1,5 @@
 from dproxy.tasks.runner import make_runner
+from dproxy.utils import get_http
 
 import requests
 from flask import current_app
@@ -13,7 +14,8 @@ def health_check(hosts):
     try:
         status_codes = []
         for host in hosts:
-            r = requests.get(f"{host['url']}/")
+            http = get_http
+            r = http.get(f"{host['url']}/")
             status_codes.append({"hostname": host["hostname"], "status": r.status_code})
         return status_codes
     except Exception as e:
@@ -24,7 +26,8 @@ def health_check(hosts):
 @runner.task(bind=True)
 def rollout(self, data=None, callback=None):
     logger.info(f"Starting Rollout for {data['hostname']}")
-    r = requests.post(f"{data['url']}/rollout", json=data)
+    http = get_http
+    r = http.post(f"{data['url']}/rollout", json=data)
     result = r.json()
     if callback is not None:
         subtask(callback).delay(result)
@@ -34,7 +37,8 @@ def rollout(self, data=None, callback=None):
 @runner.task(bind=True)
 def rollback(self, data=None, callback=None):
     logger.info(f"Starting Rollback for {data['hostname']}")
-    r = requests.post(f"{data['url']}/rollback", json=data)
+    http = get_http
+    r = http.post(f"{data['url']}/rollback", json=data)
     result = r.json()
     if callback is not None:
         subtask(callback).delay(result)
@@ -45,5 +49,6 @@ def rollback(self, data=None, callback=None):
 def complete(self, results, deployment_id=None):
     logger.info("TASKS COMPLETED", results)
     cookies = {"access_token_cookie": Config.TOKEN}
-    requests.post(f"{Config.DEPLOYMENT_API_URI}/deployment/results/{deployment_id}", cookies=cookies, json=results, 
+    http = get_http
+    http.post(f"{Config.DEPLOYMENT_API_URI}/deployment/results/{deployment_id}", cookies=cookies, json=results, 
                   verify=False)

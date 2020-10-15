@@ -1,5 +1,5 @@
 from dproxy.tasks.runner import make_runner
-from dproxy.utils import install_pkgs, restart_service
+from dproxy.utils import install_pkgs, restart_service, get_http
 
 import os
 import requests
@@ -14,7 +14,8 @@ runner = make_runner(current_app)
 def server_update(self, data):
     logger.info(f"Starting Update for {data['hostname']}")
     try:
-        r = requests.post(f"{data['url']}/update", json=data)
+        http = get_http
+        r = http.post(f"{data['url']}/update", json=data)
         return jsonify(r.get_json())
     except Exception as e:
         logger.error(e)
