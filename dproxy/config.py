@@ -1,24 +1,44 @@
 import os
+import socket
 import logging
 from dotenv import load_dotenv
 
-ENV_FILE = os.getenv("ENV_FILE")
+ENV_FILE = get_env("ENV_FILE")
 load_dotenv(ENV_FILE)
 
 
+def get_env(var):
+    if var in os.environ:
+        return os.getenv(var)
+    else:
+        hostname = socket.gethostname()
+        ip = socket.gethostbyname(hostname)
+        default = {
+            "ENV_FILE": "/etc/default/dproxy",
+            "HOSTNAME": hostname,
+            "IP": ip,
+            "STATE": "NEW",
+            "LOCATION": "PROVO",
+            "ENVIRONMENT": "PRODUCTION",
+            "DEPLOYMENT_PROXY_URI": f"http://{hostname}:8002/api/1.0.0",
+            "DEPLOYMENT_API_URI": "https://deployment.unifiedlayer.com/api/1.0.0",
+            "RETRY": 10
+        }
+        return default[var]
+
+
 class Config(object):
-    HOSTNAME = os.getenv("HOSTNAME")
-    IP = os.getenv("IP")
-    USERNAME = os.getenv("USERNAME")
-    PASSWORD = os.getenv("PASSWORD")
-    STATE = os.getenv("STATE")
-    LOCATION = os.getenv("LOCATION")
-    ENVIRONMENT = os.getenv("ENVIRONMENT")
-    TOKEN = os.getenv("TOKEN")
-    DEPLOYMENT_PROXY_URI = os.getenv("DEPLOYMENT_PROXY_URI")
-    DEPLOYMENT_API_URI = os.getenv("DEPLOYMENT_API_URI")
-    ENV_FILE = os.getenv("ENV_FILE")
-    
+    HOSTNAME = get_env("HOSTNAME")
+    IP = get_env("IP")
+    STATE = get_env("STATE")
+    LOCATION = get_env("LOCATION")
+    ENVIRONMENT = get_env("ENVIRONMENT")
+    DEPLOYMENT_PROXY_URI = get_env("DEPLOYMENT_PROXY_URI")
+    DEPLOYMENT_API_URI = get_env("DEPLOYMENT_API_URI")
+    ENV_FILE = get_env("ENV_FILE")
+    RETRY = get_env("RETRY")
+    TOKEN = get_env("TOKEN")
+
     CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL")
     CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND")
     CELERY_TASK_SERIALIZER = os.getenv("CELERY_TASK_SERIALIZER")

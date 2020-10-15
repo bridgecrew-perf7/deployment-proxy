@@ -1,7 +1,7 @@
 from dproxy.config import Config, get_logger
+from dproxy.utils import get_http
 
 import os
-import requests
 from flask import request
 
 logger = get_logger()
@@ -11,7 +11,8 @@ def post_register_server():
     data = request.get_json()
     try:
         logger.info(f"POST REGISTER SERVER: {data}")
-        r = requests.post(f"{Config.DEPLOYMENT_API_URI}/register/server", json=data, verify=False)
+        http = get_http()
+        r = http.post(f"{Config.DEPLOYMENT_API_URI}/register/server", json=data, verify=False)
         resp = r.json()
         logger.info(f"RESPONSE REGISTER SERVER: {resp}")
         response = {
