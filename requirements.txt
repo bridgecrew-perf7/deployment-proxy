@@ -1,0 +1,90 @@
+-i https://pypi.org/simple
+amqp==5.0.1; python_version >= '3.6'
+apipkg==1.5; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
+appdirs==1.4.4
+argon2-cffi==20.1.0
+attrs==20.2.0; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
+authlib==0.15
+beautifulsoup4==4.9.3
+billiard==3.6.3.0
+bleach==3.2.1; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'
+celery==5.0.0
+certifi==2020.6.20
+cffi==1.14.3
+chameleon==3.8.1
+chardet==3.0.4
+check-manifest==0.44; python_version >= '3.5'
+click-didyoumean==0.0.3
+click-repl==0.1.6
+click==7.1.2; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'
+clickclick==20.10.2
+cmarkgfm==0.4.2
+connexion==2.7.0
+cryptography==3.1.1; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'
+defusedxml==0.6.0; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'
+devpi-client==5.2.1
+devpi-common==3.6.0
+devpi-server==5.5.0
+devpi-web==4.0.5; python_version >= '3.4'
+devpi==2.2.0
+distlib==0.3.1
+docutils==0.16; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'
+execnet==1.7.1; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
+filelock==3.0.12
+flask==1.1.2
+gunicorn==20.0.4
+hupper==1.10.2; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
+idna==2.10; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
+inflection==0.5.1; python_version >= '3.5'
+itsdangerous==1.1.0; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
+jinja2==2.11.2; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'
+jsonschema==3.2.0
+kombu==5.0.2; python_version >= '3.6'
+lazy==1.4
+markupsafe==1.1.1; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
+openapi-spec-validator==0.2.9
+packaging==20.4; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
+passlib[argon2]==1.7.4
+pastedeploy==2.1.1
+pep517==0.8.2
+pkginfo==1.5.0.1
+plaster-pastedeploy==0.7; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
+plaster==1.0; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
+pluggy==0.13.1; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
+prompt-toolkit==3.0.8; python_full_version >= '3.6.1'
+py==1.9.0; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
+pycparser==2.20; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
+pygments==2.7.1; python_version >= '3.5'
+pyparsing==2.4.7; python_version >= '2.6' and python_version not in '3.0, 3.1, 3.2, 3.3'
+pyramid-chameleon==0.3
+pyramid==1.10.4; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
+pyrsistent==0.17.3; python_version >= '3.5'
+python-dateutil==2.8.1; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
+python-dotenv==0.14.0
+pytz==2020.1
+pyyaml==5.3.1
+readme-renderer[md]==27.0
+redis==3.5.3
+repoze.lru==0.7
+requests==2.24.0
+ruamel.yaml.clib==0.2.2; python_version < '3.9' and platform_python_implementation == 'CPython'
+ruamel.yaml==0.16.12
+six==1.15.0; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
+soupsieve==2.0.1; python_version >= '3.0'
+strictyaml==1.1.0
+swagger-ui-bundle==0.0.8
+toml==0.10.1
+tox==3.20.1; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'
+translationstring==1.4
+urllib3==1.25.10; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4' and python_version < '4'
+venusian==3.0.0; python_version >= '3.5'
+vine==5.0.0; python_version >= '3.6'
+virtualenv==20.0.34; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
+waitress==1.4.4; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'
+wcwidth==0.2.5
+webencodings==0.5.1
+webob==1.8.6; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
+werkzeug==1.0.1; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'
+whoosh==2.7.4
+zope.deprecation==4.4.0
+zope.interface==5.1.2; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'
