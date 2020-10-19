@@ -3,7 +3,7 @@ import socket
 import logging
 from dotenv import load_dotenv
 
-ENV_FILE = get_env("ENV_FILE")
+ENV_FILE = os.getenv("ENV_FILE")
 load_dotenv(ENV_FILE)
 
 
