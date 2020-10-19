@@ -78,17 +78,17 @@ class Config(object):
     CELERY_TIMEZONE = get_env("CELERY_TIMEZONE")
     CELERY_UTC = get_env("CELERY_UTC")
 
-    CELERYD_NODES = "worker1 worker2 worker3 worker4"
-    CELERY_BIN = "/Library/Frameworks/Python.framework/Versions/3.8/bin/celery"
-    CELERY_APP = "dproxy.runner.runner:app"
-    CELERYD_CHDIR = "/opt/deployment/"
-    CELERYD_OPTS = "--time-limit=300 --concurrency=8"
-    CELERYD_LOG_LEVEL = "INFO",
-    CELERYD_LOG_FILE = "/var/log/celery/%n%I.log"
-    CELERYD_PID_FILE = "/var/run/celery/%n.pid"
-    CELERYD_USER = "deployment"
-    CELERYD_GROUP = "deployment"
-    CELERY_CREATE_DIRS = 1
+    CELERYD_NODES = get_env("CELERYD_NODES")
+    CELERY_BIN = get_env("CELERY_BIN")
+    CELERY_APP = get_env("CELERY_APP")
+    CELERYD_CHDIR = get_env("CELERYD_CHDIR")
+    CELERYD_OPTS = get_env("CELERYD_OPTS")
+    CELERYD_LOG_LEVEL = get_env("CELERYD_LOG_LEVEL")
+    CELERYD_LOG_FILE = get_env("CELERYD_LOG_FILE")
+    CELERYD_PID_FILE = get_env("CELERYD_PID_FILE")
+    CELERYD_USER = get_env("CELERYD_USER")
+    CELERYD_GROUP = get_env("CELERYD_GROUP")
+    CELERY_CREATE_DIRS = get_env("CELERY_CREATE_DIRS")
 
 
 def get_logger():
