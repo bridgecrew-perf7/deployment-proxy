@@ -47,8 +47,11 @@ def update_env(key, value):
     env = LastUpdated()
     with open(Config.ENV_FILE) as f:
         for line in f:
-            (k, v) = line.split("=", 1)
-            env[k] = v
+            try:
+                (k, v) = line.split("=", 1)
+                env[k] = v
+            except:
+                pass
     env[key] = value
 
     with open(Config.ENV_FILE, "w") as f:
