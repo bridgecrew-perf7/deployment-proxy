@@ -23,6 +23,7 @@ def get_env(var):
             "DEPLOYMENT_PROXY_URI": f"http://{hostname}:8002/api/1.0.0",
             "DEPLOYMENT_API_URI": "https://deployment.unifiedlayer.com/api/1.0.0",
             "RETRY": 10,
+            "TOKEN": None
         }
         return default[var]
 
