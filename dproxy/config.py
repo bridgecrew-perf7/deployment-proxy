@@ -78,16 +78,16 @@ class Config(object):
     CELERY_TIMEZONE = get_env("CELERY_TIMEZONE")
     CELERY_UTC = get_env("CELERY_UTC")
 
-    CELERYD_NODES = "worker1 worker2 worker3 worker4",
-    CELERY_BIN = "/Library/Frameworks/Python.framework/Versions/3.8/bin/celery",
-    CELERY_APP = "dproxy.runner.runner:app",
-    CELERYD_CHDIR = "/opt/deployment/",
-    CELERYD_OPTS = "--time - limit = 300 - -concurrency = 8",
+    CELERYD_NODES = "worker1 worker2 worker3 worker4"
+    CELERY_BIN = "/Library/Frameworks/Python.framework/Versions/3.8/bin/celery"
+    CELERY_APP = "dproxy.runner.runner:app"
+    CELERYD_CHDIR = "/opt/deployment/"
+    CELERYD_OPTS = "--time-limit=300 --concurrency=8"
     CELERYD_LOG_LEVEL = "INFO",
-    CELERYD_LOG_FILE = "/var/log/celery/%n%I.log",
-    CELERYD_PID_FILE = "/var/run/celery/%n.pid",
-    CELERYD_USER = "deployment",
-    CELERYD_GROUP = "deployment",
+    CELERYD_LOG_FILE = "/var/log/celery/%n%I.log"
+    CELERYD_PID_FILE = "/var/run/celery/%n.pid"
+    CELERYD_USER = "deployment"
+    CELERYD_GROUP = "deployment"
     CELERY_CREATE_DIRS = 1
 
 def get_logger()
