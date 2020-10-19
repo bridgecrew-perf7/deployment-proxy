@@ -8,7 +8,7 @@ load_dotenv(ENV_FILE)
 
 
 def get_env(var):
-    if var in os.environ:
+    if os.getenv(var):
         return os.getenv(var)
     else:
         hostname = socket.gethostname()
@@ -22,7 +22,7 @@ def get_env(var):
             "ENVIRONMENT": "PRODUCTION",
             "DEPLOYMENT_PROXY_URI": f"http://{hostname}:8002/api/1.0.0",
             "DEPLOYMENT_API_URI": "https://deployment.unifiedlayer.com/api/1.0.0",
-            "RETRY": 10
+            "RETRY": 10,
         }
         return default[var]
 
