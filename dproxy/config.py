@@ -42,7 +42,18 @@ def get_env(var):
             "CELERY_RESULT_SERIALIZER": "json",
             "CELERY_ACCEPT_CONTENT": ["json", "application/text"],
             "CELERY_TIMEZONE": "UTC",
-            "CELERY_UTC": "True"
+            "CELERY_UTC": "True",
+            "CELERYD_NODES": "worker1 worker2 worker3 worker4",
+            "CELERY_BIN": "/Library/Frameworks/Python.framework/Versions/3.8/bin/celery",
+            "CELERY_APP": "dproxy.runner.runner:app",
+            "CELERYD_CHDIR": "/opt/deployment/",
+            "CELERYD_OPTS": "--time - limit = 300 - -concurrency = 8",
+            "CELERYD_LOG_LEVEL": "INFO",
+            "CELERYD_LOG_FILE": "/var/log/celery/%n%I.log",
+            "CELERYD_PID_FILE": "/var/run/celery/%n.pid",
+            "CELERYD_USER": "deployment",
+            "CELERYD_GROUP": "deployment",
+            "CELERY_CREATE_DIRS": 1
         }
         return default[var]
 
@@ -59,16 +70,27 @@ class Config(object):
     RETRY = get_env("RETRY")
     TOKEN = get_env("TOKEN")
 
-    CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL")
-    CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND")
-    CELERY_TASK_SERIALIZER = os.getenv("CELERY_TASK_SERIALIZER")
-    CELERY_RESULT_SERIALIZER = os.getenv("CELERY_RESULT_SERIALIZER")
-    CELERY_ACCEPT_CONTENT = os.getenv("CELERY_ACCEPT_CONTENT")
-    CELERY_TIMEZONE = os.getenv("CELERY_TIMEZONE")
-    CELERY_UTC = os.getenv("CELERY_UTC")
+    CELERY_BROKER_URL = get_env("CELERY_BROKER_URL")
+    CELERY_RESULT_BACKEND = get_env("CELERY_RESULT_BACKEND")
+    CELERY_TASK_SERIALIZER = get_env("CELERY_TASK_SERIALIZER")
+    CELERY_RESULT_SERIALIZER = get_env("CELERY_RESULT_SERIALIZER")
+    CELERY_ACCEPT_CONTENT = get_env("CELERY_ACCEPT_CONTENT")
+    CELERY_TIMEZONE = get_env("CELERY_TIMEZONE")
+    CELERY_UTC = get_env("CELERY_UTC")
 
+    CELERYD_NODES = "worker1 worker2 worker3 worker4",
+    CELERY_BIN = "/Library/Frameworks/Python.framework/Versions/3.8/bin/celery",
+    CELERY_APP = "dproxy.runner.runner:app",
+    CELERYD_CHDIR = "/opt/deployment/",
+    CELERYD_OPTS = "--time - limit = 300 - -concurrency = 8",
+    CELERYD_LOG_LEVEL = "INFO",
+    CELERYD_LOG_FILE = "/var/log/celery/%n%I.log",
+    CELERYD_PID_FILE = "/var/run/celery/%n.pid",
+    CELERYD_USER = "deployment",
+    CELERYD_GROUP = "deployment",
+    CELERY_CREATE_DIRS = 1
 
-def get_logger():
+def get_logger()
     logger = logging.getLogger("dproxy")
     logger.setLevel(logging.DEBUG)
     fh = logging.FileHandler("/var/log/deployment/dproxy.log")

@@ -1,7 +1,7 @@
 Deployment-Proxy
 
 A simple Flask / Celery app that coordinates requests from the deployment-api
-to the deployment-clients.
+to the deployment-clients, through secure environments.
 
 Development Environment
 copy the dev environment file from the config directly into .env 
