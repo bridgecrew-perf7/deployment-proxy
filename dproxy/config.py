@@ -90,7 +90,8 @@ class Config(object):
     CELERYD_GROUP = "deployment"
     CELERY_CREATE_DIRS = 1
 
-def get_logger()
+
+def get_logger():
     logger = logging.getLogger("dproxy")
     logger.setLevel(logging.DEBUG)
     fh = logging.FileHandler("/var/log/deployment/dproxy.log")
