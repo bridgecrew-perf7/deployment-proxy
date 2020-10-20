@@ -6,7 +6,6 @@ from dotenv import load_dotenv
 
 if os.getenv("ENV_FILE"):
     load_dotenv(os.getenv("ENV_FILE"))
-    ENV_FILE = os.getenv("ENV_FILE")
 elif os.path.exists(".env"):
     load_dotenv(".env")
     os.environ["ENV_FILE"] = ".env"
@@ -36,6 +35,7 @@ def get_env(var):
             "DEPLOYMENT_API_URI": "https://deployment.unifiedlayer.com/api/1.0.0",
             "RETRY": 10,
             "TOKEN": None,
+            "DEFAULT_TIMEOUT": 5,
             "CELERY_BROKER_URL": "redis://localhost:6379/0",
             "CELERY_RESULT_BACKEND": "redis://localhost:6379/0",
             "CELERY_TASK_SERIALIZER": "json",
