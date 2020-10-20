@@ -4,19 +4,21 @@ import logging
 from dotenv import load_dotenv
 
 
-if os.getenv("ENV_FILE"):
-    load_dotenv(os.getenv("ENV_FILE"))
-elif os.path.exists(".env"):
-    load_dotenv(".env")
-    os.environ["ENV_FILE"] = ".env"
-    ENV_FILE = ".env"
-elif os.path.exists("/etc/default/dproxy"):
-    load_dotenv("/etc/default/dproxy")
-    os.environ["ENV_FILE"] = "/etc/default/dproxy"
-    ENV_FILE = "/etc/default/dproxy"
-else:
-    print("UNABLE TO LOAD AN ENVIRONMENT FILE!")
-    ENV_FILE = None
+def get_env_file():
+    if os.getenv("ENV_FILE"):
+        load_dotenv(os.getenv("ENV_FILE"))
+        return os.getenv("ENV_FILE")
+    elif os.path.exists(".env"):
+        load_dotenv(".env")
+        os.environ["ENV_FILE"] = ".env"
+        return ".env"
+    elif os.path.exists("/etc/default/dproxy"):
+        load_dotenv("/etc/default/dproxy")
+        os.environ["ENV_FILE"] = "/etc/default/dproxy"
+        return "/etc/default/dproxy"
+    else:
+        print("UNABLE TO LOAD AN ENVIRONMENT FILE!")
+        return None
 
 
 def get_env(var):
@@ -66,7 +68,7 @@ class Config(object):
     ENVIRONMENT = get_env("ENVIRONMENT")
     DEPLOYMENT_PROXY_URI = get_env("DEPLOYMENT_PROXY_URI")
     DEPLOYMENT_API_URI = get_env("DEPLOYMENT_API_URI")
-    ENV_FILE = ENV_FILE
+    ENV_FILE = get_env_file()
     RETRY = get_env("RETRY")
     TOKEN = get_env("TOKEN")
 
