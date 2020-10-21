@@ -81,16 +81,17 @@ def register_proxy():
             "state": "NEW",
             "location": Config.LOCATION,
             "environment": Config.ENVIRONMENT,
-            "url": Config.DEPLOYMENT_PROXY_URI
+            "url": Config.DEPLOYMENT_PROXY_URI,
+            "created_by": "dproxy"
         }
         http = get_http()
         r = http.post(f"{Config.DEPLOYMENT_API_URI}/register/proxy", json=data)
         resp = r.json()
         logger.error(resp)
         if "token" in resp:
-            #update_env("TOKEN", resp["token"])
-            #os.environ["TOKEN"] = resp["token"]
-            #set_state("ACTIVE")
+            update_env("TOKEN", resp["token"])
+            os.environ["TOKEN"] = resp["token"]
+            set_state("ACTIVE")
             return True
         else:
             return False
