@@ -2,7 +2,8 @@ import os
 import base64
 import requests
 from flask import request
-from dproxy.utils import get_http
+from dproxy.util.http_helper import get_http
+
 
 def post_versionlock():
     data = request.get_json()

@@ -1,4 +1,11 @@
+from dproxy.util.config import Config
+from dproxy.util.logger import get_logger
+
 import requests
+from requests.adapters import HTTPAdapter
+from requests.packages.urllib3.util.retry import Retry
+
+logger = get_logger()
 
 
 class TimeoutHTTPAdapter(HTTPAdapter):

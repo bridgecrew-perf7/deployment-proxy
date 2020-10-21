@@ -1,6 +1,6 @@
-from dproxy.config import Config
-from dproxy.tasks.update.tasks import server_update
+from dproxy.util.config import Config
 from dproxy.tasks.watcher import Watcher
+from dproxy.tasks.update.tasks import server_update
 
 import os
 from flask import request

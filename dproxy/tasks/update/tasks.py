@@ -1,5 +1,6 @@
 from dproxy.tasks.runner import make_runner
-from dproxy.utils import install_pkgs, restart_service, get_http
+from dproxy.util.http_helper import get_http
+from dproxy.util.core import restart_service, install_pkgs
 
 import os
 import requests

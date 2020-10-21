@@ -1,4 +1,4 @@
-from dproxy.config import Config
+from dproxy.util.config import Config
 
 from celery import Celery
 from celery.signals import after_setup_task_logger

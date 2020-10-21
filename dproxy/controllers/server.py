@@ -1,4 +1,5 @@
-from dproxy.config import Config, get_logger
+from dproxy.util.config import Config
+from dproxy.util.logger import get_logger
 
 import os
 import requests

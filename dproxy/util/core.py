@@ -1,11 +1,13 @@
-from dproxy.util.config import load_config
+from dproxy.util.config import Config
+from dproxy.util.logger import get_logger
 from dproxy.util.http_helper import get_http
 
 import os
 import sys
+from collections import OrderedDict
 from subprocess import check_output, check_call, Popen
 
-config = load_config()
+logger = get_logger()
 
 
 class LastUpdated(OrderedDict):
@@ -24,7 +26,7 @@ def update_env(key, value):
     try:
         os.environ[key] = value
         env = LastUpdated()
-        with open(config["environment_file"]) as f:
+        with open(Config.ENV_FILE) as f:
             for line in f:
                 try:
                     (k, v) = line.split("=", 1)
@@ -33,7 +35,7 @@ def update_env(key, value):
                     pass
         env[key] = value
 
-        with open(config["environment_file"], "w") as f:
+        with open(Config.ENV_FILE, "w") as f:
             for k in env.keys():
                 line = f"{k}={env[k]}"
                 if "\n" in line:
@@ -53,14 +55,14 @@ def set_state(state):
     :return: True or False
     """
     try:
-        headers = {"Authorization": config["token"]}
-        data = {"hostname": config["hostname"], "state": state}
+        headers = {"Authorization": Config.TOKEN}
+        data = {"hostname": Config.HOSTNAME, "state": state}
         http = get_http()
-        r = http.patch(f"{config['deployment_api_uri']}/server", headers=headers, json=data)
+        r = http.patch(f"{Config.DEPLOYMENT_API_URI}/server", headers=headers, json=data)
         resp = r.json()
         logger.debug(f"Updated Proxy: {resp} {r.status_code}")
-        update_env("STATE", "ACTIVE")
-        os.environ["STATE"] = "ACTIVE"
+        update_env("STATE", state)
+        os.environ["STATE"] = state
         return True
     except Exception as e:
         logger.error(f"SET STATE FAILED: {e}")
@@ -68,21 +70,30 @@ def set_state(state):
 
 
 def register_proxy():
+    """
+    Register a new proxy
+    retrieve and cache a token from deployment-api
+    """
     try:
         data = {
-            "hostname": config["hostname"],
-            "ip": config["ip"],
+            "hostname": Config.HOSTNAME,
+            "ip": Config.IP,
             "state": "NEW",
-            "location": config["location"],
-            "environment": config["environment"],
-            "url": config["url"]
+            "location": Config.LOCATION,
+            "environment": Config.ENVIRONMENT,
+            "url": Config.DEPLOYMENT_PROXY_URI
         }
         http = get_http()
-        r = http.post(f"{config['deployment_api_uri']}/register/proxy", json=data))
+        r = http.post(f"{Config.DEPLOYMENT_API_URI}/register/proxy", json=data)
         resp = r.json()
-        update_env("TOKEN", resp["token"])
-        os.environ["TOKEN"] = resp["token"]
-        return True
+        logger.error(resp)
+        if "token" in resp:
+            #update_env("TOKEN", resp["token"])
+            #os.environ["TOKEN"] = resp["token"]
+            #set_state("ACTIVE")
+            return True
+        else:
+            return False
     except Exception as e:
         logger.error(f"Register Proxy Failed: {e}")
         return False

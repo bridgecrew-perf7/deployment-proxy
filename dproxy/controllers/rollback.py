@@ -1,7 +1,7 @@
 import os
 from flask import request
 
-from dproxy.config import Config
+from dproxy.util.config import Config
 from dproxy.tasks.deployment.tasks import rollback
 from dproxy.tasks.watcher import Watcher
 

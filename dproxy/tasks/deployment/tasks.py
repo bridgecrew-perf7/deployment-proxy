@@ -1,5 +1,5 @@
 from dproxy.tasks.runner import make_runner
-from dproxy.utils import get_http
+from dproxy.util.http_helper import get_http
 
 import requests
 from flask import current_app
