@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-from dproxy.util.config import load_config
+from dproxy.util.config import Config
 from dproxy.util.logger import get_logger
 from dproxy.tasks.runner import make_runner
 from dproxy.util.core import set_state, register_proxy
@@ -9,8 +9,6 @@ import requests
 import connexion
 from dotenv import load_dotenv
 from flask import Flask, request
-
-config = load_config()
 
 
 if not os.getenv("TOKEN"):
@@ -22,6 +20,6 @@ else:
 flask_app = connexion.FlaskApp(__name__)
 flask_app.add_api("openapi.yaml", validate_responses=True, strict_validation=True)
 app = flask_app.app
-app.config.from_pyfile(config)
+app.config.from_object(Config)
 with app.app_context():
     runner = make_runner(app)
