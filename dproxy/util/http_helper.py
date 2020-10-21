@@ -30,8 +30,7 @@ def get_http():
         status_forcelist=[429, 500, 502, 503, 504],
         method_whitelist=["HEAD", "GET", "OPTIONS", "TRACE", "DELETE", "PUT", "PATCH", "POST"]
     )
-    adapter = HTTPAdapter(max_retries=retry_strategy)
     http = requests.Session()
-    http.mount("https://", adapter)
-    http.mount("http://", adapter)
+    http.mount("https://", TimeoutHTTPAdapter(max_retries=retry_strategy))
+    http.mount("http://", TimeoutHTTPAdapter(max_retries=retry_strategy))
     return http
