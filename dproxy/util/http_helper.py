@@ -10,7 +10,7 @@ logger = get_logger()
 
 class TimeoutHTTPAdapter(HTTPAdapter):
     def __init__(self, *args, **kwargs):
-        self.timeout = Config.DEFAULT_TIMEOUT
+        self.timeout = int(Config.DEFAULT_TIMEOUT)
         if "timeout" in kwargs:
             self.timeout = kwargs["timeout"]
             del kwargs["timeout"]
@@ -25,10 +25,10 @@ class TimeoutHTTPAdapter(HTTPAdapter):
 
 def get_http():
     retry_strategy = Retry(
-        total=10,
-        backoff_factor=1,
-        status_forcelist=[429, 500, 502, 503, 504],
-        method_whitelist=["HEAD", "GET", "OPTIONS", "TRACE", "DELETE", "PUT", "PATCH", "POST"]
+        total=int(Config.RETRY),
+        backoff_factor=int(Config.BACKOFF_FACTOR),
+        status_forcelist=list(Config.STATUS_FORCELIST),
+        method_whitelist=list(Config.METHOD_WHITELIST)
     )
     http = requests.Session()
     http.mount("https://", TimeoutHTTPAdapter(max_retries=retry_strategy))
