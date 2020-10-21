@@ -12,7 +12,7 @@ def post_register_server():
     try:
         logger.info(f"POST REGISTER SERVER: {data}")
         http = get_http()
-        r = http.post(f"{Config.DEPLOYMENT_API_URI}/register/server", json=data, verify=False)
+        r = http.post(f"{Config.DEPLOYMENT_API_URI}/register/server", json=data)
         resp = r.json()
         logger.info(f"RESPONSE REGISTER SERVER: {resp}")
         response = {

@@ -14,7 +14,7 @@ def server(self, data):
     try:
         cookies = {"access_token_cookie": request.headers["Authorization"]}
         http = get_http
-        http.post(f"{Config.DEPLOYMENT_API_URI}/server", cookies=cookies, json=data, verify=False)
+        http.post(f"{Config.DEPLOYMENT_API_URI}/server", cookies=cookies, json=data)
     except Exception as e:
         logger.error(e)
 
@@ -25,6 +25,6 @@ def server_history(self, data):
     try:
         cookies = {"access_token_cookie": request.headers["Authorization"]}
         http = get_http
-        http.post(f"{Config.DEPLOYMENT_API_URI}/server/history", cookies=cookies, json=data, verify=False)
+        http.post(f"{Config.DEPLOYMENT_API_URI}/server/history", cookies=cookies, json=data)
     except Exception as e:
         logger.error(e)

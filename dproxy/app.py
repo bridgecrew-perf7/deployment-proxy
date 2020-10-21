@@ -1,37 +1,27 @@
 #!/usr/bin/python3
-from dproxy.utils import update_env
+from dproxy.util.config import load_config
+from dproxy.util.logger import get_logger
 from dproxy.tasks.runner import make_runner
-from dproxy.config import Config, get_logger
+from dproxy.util.core import set_state, register_proxy
 
 import os
 import requests
 import connexion
+from dotenv import load_dotenv
 from flask import Flask, request
 
-logger = get_logger()
+config = load_config()
 
-if not Config.TOKEN:
-    data = {
-        "created_by": "dproxy",
-        "hostname": Config.HOSTNAME,
-        "ip": Config.IP,
-        "state": Config.STATE,
-        "location": Config.LOCATION,
-        "environment": Config.ENVIRONMENT,
-        "url": Config.DEPLOYMENT_PROXY_URI
-    }
-    r = requests.post("{}/register/proxy".format(Config.DEPLOYMENT_API_URI), json=data, verify=False)
-    resp = r.json()
-    logger.info(resp)
-    if "token" in resp:
-        update_env("STATE", "ACTIVE")
-        update_env("TOKEN", resp["token"])
-        os.environ["STATE"] = "ACTIVE"
-        os.environ["TOKEN"] = resp["token"]
-        
+
+if not os.getenv("TOKEN"):
+    register_proxy()
+else:
+    set_state()
+    
+
 flask_app = connexion.FlaskApp(__name__)
 flask_app.add_api("openapi.yaml", validate_responses=True, strict_validation=True)
 app = flask_app.app
-app.config.from_object(Config)
+app.config.from_pyfile(config)
 with app.app_context():
     runner = make_runner(app)

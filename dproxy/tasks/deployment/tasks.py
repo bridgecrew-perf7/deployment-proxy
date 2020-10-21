@@ -50,5 +50,4 @@ def complete(self, results, deployment_id=None):
     logger.info("TASKS COMPLETED", results)
     cookies = {"access_token_cookie": Config.TOKEN}
     http = get_http
-    http.post(f"{Config.DEPLOYMENT_API_URI}/deployment/results/{deployment_id}", cookies=cookies, json=results, 
-                  verify=False)
+    http.post(f"{Config.DEPLOYMENT_API_URI}/deployment/results/{deployment_id}", cookies=cookies, json=results)
