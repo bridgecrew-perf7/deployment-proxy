@@ -79,3 +79,4 @@ class Config(object):
     BACKOFF_FACTOR = get_var("BACKOFF_FACTOR")
     STATUS_FORCELIST = get_var("STATUS_FORCELIST")
     METHOD_WHITELIST = get_var("METHOD_WHITELIST")
+    DEFAULT_TIMEOUT = get_var("DEFAULT_TIMEOUT")
