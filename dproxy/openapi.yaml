@@ -189,6 +189,9 @@ components:
         location:
           type: string
           example: provo1
+        deployment_proxy:
+          type: string
+          example: deploy-proxy.hp.provo1.endurancemb.com
     Server:
       type: object
       properties:
