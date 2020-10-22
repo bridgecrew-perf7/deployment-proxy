@@ -87,7 +87,7 @@ def register_proxy():
         http = get_http()
         r = http.post(f"{Config.DEPLOYMENT_API_URI}/register/proxy", json=data)
         resp = r.json()
-        logger.error(resp)
+        logger.info(resp)
         if "token" in resp:
             update_env("TOKEN", resp["token"])
             os.environ["TOKEN"] = resp["token"]
