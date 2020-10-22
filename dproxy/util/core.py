@@ -56,9 +56,9 @@ def set_state(state):
     """
     try:
         headers = {"Authorization": Config.TOKEN}
-        data = {"hostname": Config.HOSTNAME, "state": state}
+        data = {"state": state}
         http = get_http()
-        r = http.patch(f"{Config.DEPLOYMENT_API_URI}/server", headers=headers, json=data)
+        r = http.patch(f"{Config.DEPLOYMENT_API_URI}/deployment/proxy/hostname/{Config.HOSTNAME}", headers=headers, json=data)
         resp = r.json()
         logger.debug(f"Updated Proxy: {resp} {r.status_code}")
         update_env("STATE", state)

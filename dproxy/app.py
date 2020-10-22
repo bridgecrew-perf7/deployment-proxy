@@ -14,7 +14,7 @@ from flask import Flask, request
 if not os.getenv("TOKEN"):
     register_proxy()
 else:
-    set_state()
+    set_state("ACTIVE")
     
 
 flask_app = connexion.FlaskApp(__name__)
