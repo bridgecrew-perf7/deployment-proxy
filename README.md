@@ -1,9 +1,9 @@
-Deployment-Proxy
+#Deployment-Proxy
 
 A simple Flask / Celery app that coordinates requests from the deployment-api
 to the deployment-clients and vice-versa, through secure environments.
 
-Development Environment:
+##Seting up Development Environment:
    - Copy the dev environment file from files into .env or where ever you want to store your environment file 
 (default: /etc/default/dproxy)
    - Export ENV_FILE to load the environment file
@@ -18,6 +18,8 @@ Development Environment:
 
    - Make and edits that you need to make for your environment
 the ENVIRONMENT variables will override the CONFIG variables if both are set.
+
+   - Create a folder /var/log/deployment and make sure you have permissions to this directory.
 
 Install pipenv if needed
 (pip install pipenv)
