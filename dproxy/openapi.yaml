@@ -95,6 +95,20 @@ paths:
       responses:
         default:
           description: successful operation
+  /update:
+    post:
+      summary: issue an update
+      operationId: dproxy.controllers.update.post_update
+      requestBody:
+        description: Create Update object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Update'
+        required: true
+      responses:
+        default:
+          description: successful operation
   /versionlock:
     post:
       summary: create a versionlock
@@ -237,6 +251,14 @@ components:
         yum_rollback_id:
           type: integer
           example: 1
+    Update:
+      type: object
+      properties:
+        hostname:
+          type: string
+          example: deploy-proxy.hp.provo1.endurancemb.com
+        hosts:
+          type: array
     VersionLock:
       type: object
       properties:

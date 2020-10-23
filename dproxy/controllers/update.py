@@ -11,7 +11,7 @@ def post_update():
     try:
         if "hosts" in inventory:
             Watcher("server_update", inventory)
-        elif "hostname" in data and data["hostname"] == Config.HOSTNAME:
+        elif "hostname" in inventory and inventory["hostname"] == Config.HOSTNAME:
             proxy_update.apply_async(args=[data])
         response = {
             "status": "success",
