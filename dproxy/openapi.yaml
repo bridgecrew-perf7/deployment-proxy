@@ -158,6 +158,8 @@ components:
         yum_rollback_id:
           type: integer
           example: 1
+        hosts:
+          type: array
     RollBack:
       type: object
       properties:
@@ -179,6 +181,8 @@ components:
         yum_rollback_id:
           type: integer
           example: 1
+        hosts:
+          type: array
     RegisterServer:
       type: object
       properties:
