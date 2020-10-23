@@ -210,6 +210,9 @@ components:
         deployment_proxy:
           type: string
           example: deploy-proxy.hp.provo1.endurancemb.com
+        url:
+          type: string
+          example: http://www0.hp.provo1.endurancemb.com:8003
     Server:
       type: object
       properties:
@@ -266,6 +269,5 @@ components:
     VersionLock:
       type: object
       properties:
-        packages:
-          type: string
-          example: 1
+        versionlock:
+          type: array
