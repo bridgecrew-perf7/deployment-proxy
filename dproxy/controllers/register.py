@@ -1,8 +1,8 @@
 from dproxy.util.config import Config
 from dproxy.util.logger import get_logger
-from dproxy.util.http_helper import get_http
 
 import os
+import requests
 from flask import request
 
 logger = get_logger()
@@ -12,8 +12,7 @@ def post_register_server():
     data = request.get_json()
     try:
         logger.debug(f"POST REGISTER SERVER: {data}")
-        http = get_http()
-        r = http.post(f"{Config.DEPLOYMENT_API_URI}/register/server", json=data)
+        r = requests.post(f"{Config.DEPLOYMENT_API_URI}/register/server", json=data)
         resp = r.json()
         logger.debug(f"RESPONSE REGISTER SERVER: {resp}")
         response = {
@@ -21,7 +20,7 @@ def post_register_server():
             "message": "Server successfully registered",
             "token": resp["token"]
         }
-        return response, 200
+        return response, 201
     except Exception as e:
         response = {
             "status": "failure",
