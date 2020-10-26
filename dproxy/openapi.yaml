@@ -271,3 +271,6 @@ components:
       properties:
         versionlock:
           type: array
+        url:
+          type: string
+          example: http://deployment-client.unifiedlayer.com
