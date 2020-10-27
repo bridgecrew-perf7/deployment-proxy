@@ -1,7 +1,11 @@
+from dproxy.util.logger import get_logger
+
 import os
 import socket
 from dotenv import load_dotenv
 from collections import OrderedDict
+
+logger = get_logger()
 
 
 class LastUpdated(OrderedDict):
@@ -10,41 +14,55 @@ class LastUpdated(OrderedDict):
         self.move_to_end(key)
         
 
-environment_file = "/etc/default/dproxy"
 if os.getenv("ENV_FILE"):
-    environment_file = os.getenv("ENV_FILE")
-try:
-    load_dotenv(environment_file)
-except Exception as e:
-    raise Exception(f"Unable to load environment {environment_file}: {e}")
+    load_dotenv(os.getenv("ENV_FILE"))
+elif os.path.exists(".env"):
+    load_dotenv(".env")
+elif os.path.exists("/etc/default/dproxy"):
+    load_dotenv("/etc/default/dproxy")
+else:
+    raise Exception("No Environment File Found!")
 
-config_file = "/etc/deployment/dproxy.conf"
-if os.getenv("CONFIG_FILE"):
-    config_file = os.getenv("CONFIG_FILE")
-config = LastUpdated()
-try:
-    with open(config_file) as cfg:
-        for line in cfg:
-            try:
-                (k, v) = line.split("=", 1)
-                config[k] = v
-            except:
-                pass
-except Exception as e:
-    raise Exception(f"Unable to load configuration {config_file}: {e}")
-    
+
+def get_config():
+    if os.getenv("CONFIG_FILE"):
+        config_file = os.getenv("CONFIG_FILE")
+    else:
+        config_file = "/etc/deployment/dproxy.conf"
+
+    if os.path.exists(config_file):
+        config = LastUpdated()
+        with open(config_file) as cfg:
+            for line in cfg:
+                try:
+                    (k, v) = line.split("=", 1)
+                    config[k] = v
+                except:
+                    pass
+        return config
+    else:
+        return None
+
 
 def get_var(var):
+    config = get_config()
     if os.getenv(var):
+        logger.error(f"FOUND ENV: {var}")
         return os.getenv(var)
     else:
-        if var in config:
-            return config[var]
+        if config:
+            if var in config:
+                return config[var]
+            else:
+                return None
         else:
+            logger.error(f"NO CONFIG: {var}")
             return None
 
 
 class Config(object):
+    SECRET_KEY = get_var("SECRET_KEY")
+    STATE = get_var("STATE")
     HOSTNAME = get_var("HOSTNAME")
     IP = get_var("IP")
     LOCATION = get_var("LOCATION")
