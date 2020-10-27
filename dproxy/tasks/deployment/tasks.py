@@ -1,6 +1,7 @@
 from dproxy.tasks.runner import make_runner
 from dproxy.util.http_helper import get_http
 
+import base64
 import requests
 from flask import current_app
 from celery import subtask
@@ -15,7 +16,7 @@ def health_check(hosts):
         status_codes = []
         for host in hosts:
             http = get_http
-            r = http.get(f"{host['url']}/")
+            r = http.get(f"{host['hostname']}:8003/")
             status_codes.append({"hostname": host["hostname"], "status": r.status_code})
         return status_codes
     except Exception as e:
@@ -27,7 +28,7 @@ def health_check(hosts):
 def rollout(self, data=None, callback=None):
     logger.info(f"Starting Rollout for {data['hostname']}")
     http = get_http
-    r = http.post(f"{data['url']}/rollout", json=data)
+    r = http.post(f"{data['hostname']}:8003/rollout", json=data)
     result = r.json()
     if callback is not None:
         subtask(callback).delay(result)
@@ -38,7 +39,7 @@ def rollout(self, data=None, callback=None):
 def rollback(self, data=None, callback=None):
     logger.info(f"Starting Rollback for {data['hostname']}")
     http = get_http
-    r = http.post(f"{data['url']}/rollback", json=data)
+    r = http.post(f"{data['hostname']}:8003/rollback", json=data)
     result = r.json()
     if callback is not None:
         subtask(callback).delay(result)

@@ -58,7 +58,8 @@ def set_state(state):
         headers = {"Authorization": Config.TOKEN}
         data = {"state": state}
         http = get_http()
-        r = http.patch(f"{Config.DEPLOYMENT_API_URI}/deployment/proxy/hostname/{Config.HOSTNAME}", headers=headers, json=data)
+        r = http.patch(f"{Config.DEPLOYMENT_API_URI}/deployment/proxy/hostname/{Config.HOSTNAME}", headers=headers, 
+                       json=data)
         resp = r.json()
         logger.debug(f"Updated Proxy: {resp} {r.status_code}")
         update_env("STATE", state)
@@ -81,7 +82,6 @@ def register_proxy():
             "state": "NEW",
             "location": Config.LOCATION,
             "environment": Config.ENVIRONMENT,
-            "url": Config.DEPLOYMENT_PROXY_URI,
             "created_by": "dproxy"
         }
         http = get_http()
