@@ -123,6 +123,19 @@ paths:
       responses:
         default:
           description: successful operation
+  /versionlock/{url}:
+    get:
+      summary: get healthcheck
+      operationId: dproxy.controllers.healthcheck.get_healthcheck
+      responses:
+        "200":
+          description: health is good
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/VersionLock'
 components:
   schemas:
     HealthCheck:
