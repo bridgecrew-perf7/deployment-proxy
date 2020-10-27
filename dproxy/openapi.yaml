@@ -125,17 +125,30 @@ paths:
           description: successful operation
   /versionlock/{url}:
     get:
-      summary: get healthcheck
-      operationId: dproxy.controllers.healthcheck.get_healthcheck
+      tags:
+      - admins
+      summary: Get server versionlock
+      operationId: dproxy.controllers.versionlock.get_versionlock
+      parameters:
+      - name: url
+        in: path
+        description: a base64 encoded server endpoint url.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
       responses:
         "200":
-          description: health is good
+          description: successful operation
           content:
             application/json:
               schema:
-                type: object
-                items:
-                  $ref: '#/components/schemas/VersionLock'
+                $ref: '#/components/schemas/VersionLock'
+        "400":
+          description: Invalid URL supplied
+        "404":
+          description: Server versionlock not found
 components:
   schemas:
     HealthCheck:
