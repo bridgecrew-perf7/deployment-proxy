@@ -8,8 +8,8 @@ def test_post_register_server(proxy_url):
             "group": "hp_testw",
             "environment": "alpha",
             "location": "test",
-            "deployment_proxy": "deployment-proxy.unifiedlayer.com",
-            "url": "http://deploument-api.unifiedlayer.com/api/1.0.0"}
+            "deployment_proxy": "dep.proxy",
+            "url": "http://dep.api:8000/api/1.0.0"}
     response = requests.post(proxy_url + '/register', json=data)
     print(response.text)
     assert response.status_code == 201
