@@ -1,70 +1,24 @@
-SECRET_KEY=EnzHRohtbOd2KN3Z5VssLbG45FmlVQPLQAmJj7eFBHEPqwoHvX
-FLASK_ENV=development
-FLASK_DEBUG=True
-FLASK_APP=bhdapi
-AD_URL=ldap://corp.endurance.com
-CACHE_TYPE=simple
+SECRET_KEY=< this needs to match the deployment-api secret_key >
+HOSTNAME=< a fake hostname that you set in /etc/hosts >
+IP=< your local IP >
+STATE=NEW
+ENVIRONMENT=DEVELOPMENT
+LOCATION=PROVO
+DEPLOYMENT_API_URI=http://localhost.localdomain:8000/api/1.0.0
+DEPLOYMENT_PROXY_URI=http://< HOSTNAME >:8002/api/1.0.0
+ENV_FILE=.env
 
-ALPHA_REPO=https://primemirror.unifiedlayer.com/alpha/centos7/repodata/repomd.xml
-BETA_REPO=https://primemirror.unifiedlayer.com/beta/centos7/repodata/repomd.xml
-STAGING_REPO=https://primemirror.unifiedlayer.com/staging/centos7/repodata/repomd.xml
-PRODUCTION_REPO=https://primemirror.unifiedlayer.com/production/centos7/repodata/repomd.xml
-
-SQLALCHEMY_DATABASE_URI=mysql://bhdapi:password@database/bhdapi
-SQLALCHEMY_TRACK_MODIFICATIONS=False
-MYSQL_ROOT_PASSWORD=Neutron!
-MYSQL_DATABASE=bhdapi
-MYSQL_USER=bhdapi
-MYSQL_PASSWORD=password
-
-LOG_TYPE=file
-LOG_LEVEL=DEBUG
-LOG_DIR=logs
-LOG_FILE=/var/log/deployment/bhdapi.log
-ACCESS_LOG_NAME=access.log
-ERROR_LOG_NAME=error.log
-LOG_MAX_BYTES=1000000000
-LOG_COPIES=1
-
-CELERY_BROKER_URL=redis://redis:6379/0
-CELERY_RESULT_BACKEND=redis://redis:6379/0
+CELERY_BROKER_URL=redis://localhost:6379/0
+CELERY_RESULT_BACKEND=redis://localhost:6379/0
 CELERY_TASK_SERIALIZER=json
 CELERY_RESULT_SERIALIZER=json
 CELERY_ACCEPT_CONTENT=["json","application/text"]
 CELERY_TIMEZONE=UTC
 CELERY_UTC=True
 
-CELERY_APP=bhdapi.api:runner
-CELERYD_MULTI=multi
-CELERYD_PID_FILE=celery/%n.pid
-CELERYD_LOG_FILE=celery/%n%I.log
-CELERYD_LOG_LEVEL=INFO
-CELERYD_OPTS=--time-limit=300 --concurrency=8
-
-COMPOSE_PROJECT_NAME=deployment
-
-DOCKER_RESTART_POLICY=unless-stopped
-DOCKER_STOP_GRACE_PERIOD=3s
-DOCKER_WEB_VOLUME=/home/deployment
-
-DOCKER_HEALTHCHECK_TEST_API=curl http://localhost.localdomain:8000/api/1.0.0/
-DOCKER_WEB_PORT_API=8000
-
-DOCKER_HEALTHCHECK_TEST_PROXY=curl http://localhost.localdomain:8002/api/1.0.0/
-DOCKER_WEB_PORT_PROXY=8002
-
-
-HOSTNAME=dep.proxy
-IP=127.0.0.1
-ENVIRONMENT=DEVELOPMENT
-LOCATION=PROVO
-DEPLOYMENT_API_URI=http://dep.api:8000/api/1.0.0
-DEPLOYMENT_PROXY_URI=http://dep.proxy:8002/api/1.0.0
-ENV_FILE=.env
-
 CELERYD_NODES=worker1 worker2 worker3 worker4
 CELERY_BIN=/opt/deployment/.pyenv/shims/celery
-
+CELERY_APP=dproxy.runner.runner:app
 CELERYD_CHDIR=/opt/deployment/
 CELERYD_OPTS=--time-limit=300 --concurrency=8
 CELERYD_LOG_LEVEL=INFO
@@ -73,28 +27,4 @@ CELERYD_PID_FILE=/var/run/celery/%n.pid
 CELERYD_USER=deployment
 CELERYD_GROUP=deployment
 CELERY_CREATE_DIRS=1
-STATE=ACTIVE
-
-
-DOCKER_WEB_VOLUME=/home/deployment
-DOCKER_RESTART_POLICY=unless-stopped
-DOCKER_STOP_GRACE_PERIOD=3s
-
-
-# HTTP HELPER
-# number of times to retry requests
-RETRY=10
-# {backoff factor} * (2 ** ({number of total retries} - 1))
-#For example, if the backoff factor is set to:
-#1 second the successive sleeps will be 0.5, 1, 2, 4, 8, 16, 32, 64, 128, 256.
-#2 seconds - 1, 2, 4, 8, 16, 32, 64, 128, 256, 512
-#10 seconds - 5, 10, 20, 40, 80, 160, 320, 640, 1280, 2560
-BACKOFF_FACTOR=1
-# the http status codes to retry
-STATUS_FORCELIST=[429, 500, 502, 503, 504]
-# the http methods to retry
-METHOD_WHITELIST=["HEAD", "GET", "OPTIONS", "TRACE", "DELETE", "PUT", "PATCH", "POST"]
-# default timeout in seconds
-DEFAULT_TIMEOUT=30
-TOKEN=
 
