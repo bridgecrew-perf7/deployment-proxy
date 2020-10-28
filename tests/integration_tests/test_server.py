@@ -25,4 +25,4 @@ def test_post_server_history(proxy_url, secret_key, server_auth_cookie):
     valid_header = {"Authorization": secret_key}
     response = requests.post(proxy_url + '/server/history', headers=valid_header, json=data, cookies=server_auth_cookie)
     print(response.text)
-    assert 201 == 201
+    assert response.status_code == 201
