@@ -2,7 +2,7 @@ version: "3.4"
 
 services:
   database:
-    image: "https://bluehost-docker-stage-awsuseast.artifactory.svcs.endurance.com/bluehost-docker-stage/deployment/deployment_database/latest"
+    image: "https://bluehost-docker-stage-awsuseast.artifactory.svcs.endurance.com/artifactory/bluehost-docker-stage-awsuseast/deployment/deployment_database/latest/"
     restart: always
     env_file:
       - ".env"
