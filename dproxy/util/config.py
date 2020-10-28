@@ -1,11 +1,7 @@
-from dproxy.util.logger import get_logger
-
 import os
 import socket
 from dotenv import load_dotenv
 from collections import OrderedDict
-
-logger = get_logger()
 
 
 class LastUpdated(OrderedDict):
@@ -47,7 +43,6 @@ def get_config():
 def get_var(var):
     config = get_config()
     if os.getenv(var):
-        logger.error(f"FOUND ENV: {var}")
         return os.getenv(var)
     else:
         if config:
@@ -56,7 +51,6 @@ def get_var(var):
             else:
                 return None
         else:
-            logger.error(f"NO CONFIG: {var}")
             return None
 
 
