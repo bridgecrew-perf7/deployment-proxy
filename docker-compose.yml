@@ -2,7 +2,7 @@ version: "3.4"
 
 services:
   database:
-    image: "https://bluehost-docker-stage-awsuseast.artifactory.svcs.endurance.com/artifactory/bluehost-docker-stage-awsuseast/deployment/deployment_database:latest"
+    image: "deployment/deployment_database:latest"
     restart: always
     env_file:
       - ".env"
@@ -15,14 +15,14 @@ services:
   redis:
     env_file:
       - ".env"
-    image: "https://bluehost-docker-stage-awsuseast.artifactory.svcs.endurance.com/bluehost-docker-stage/redis:5.0.4-stretch"
+    image: "redis:5.0.4-stretch"
     restart: "${DOCKER_RESTART_POLICY}"
     stop_grace_period: "${DOCKER_STOP_GRACE_PERIOD}"
     volumes:
       - "redis:/data"
 
   dep.api:
-    image: "https://bluehost-docker-stage-awsuseast.artifactory.svcs.endurance.com/bluehost-docker-stage/deployment/deployment_api:latest"
+    image: "deployment/deployment_api:latest"
     command: gunicorn -b 0.0.0.0:8000 --log-level=INFO --workers=4 --timeout=90 'bhdapi.app:app'
     depends_on:
       - "redis"
@@ -43,7 +43,7 @@ services:
       - "${DOCKER_WEB_VOLUME}"
 
   celery:
-    image: "https://bluehost-docker-stage-awsuseast.artifactory.svcs.endurance.com/bluehost-docker-stage/deployment/deployment_celery:latest"
+    image: "deployment/deployment_celery:latest"
     command: celery -B -A bhdapi.app:runner worker -l INFO
     depends_on:
       - "redis"
@@ -61,17 +61,14 @@ services:
     image: "deployment/deployment_proxy:latest"
     command: gunicorn -b 0.0.0.0:8002 --log-level=DEBUG --workers=1 --timeout=90 'dproxy.app:app'
     depends_on:
-      - "dep.api"
-      - "redis"
-      - "database"
+      - dep.api
     env_file:
       - ".env"
     healthcheck:
       test: "${DOCKER_HEALTHCHECK_TEST_PROXY}"
       interval: "60s"
-      timeout: "3s"
-      start_period: "50s"
-      retries: 3
+      timeout: "10s"
+      retries: 5
     ports:
       - "${DOCKER_WEB_PORT_PROXY}:8002"
     restart: "${DOCKER_RESTART_POLICY}"
