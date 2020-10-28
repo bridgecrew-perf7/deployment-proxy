@@ -1,0 +1,92 @@
+version: "3.4"
+
+services:
+  database:
+    image: "deployment_database:latest"
+    restart: always
+    env_file:
+      - ".env"
+    environment:
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+      MYSQL_DATABASE: "${MYSQL_DATABASE}"
+      MYSQL_USER: "${MYSQL_USER}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+
+  redis:
+    env_file:
+      - ".env"
+    image: "redis:5.0.4-stretch"
+    restart: "${DOCKER_RESTART_POLICY}"
+    stop_grace_period: "${DOCKER_STOP_GRACE_PERIOD}"
+    volumes:
+      - "redis:/data"
+
+  api:
+    image: "deployment_api:latest"
+    command: gunicorn -b 0.0.0.0:8000 --log-level=INFO --workers=4 --timeout=90 'bhdapi.app:app'
+    depends_on:
+      - "redis"
+      - "database"
+    env_file:
+      - ".env"
+    healthcheck:
+      test: "${DOCKER_HEALTHCHECK_TEST_API}"
+      interval: "60s"
+      timeout: "3s"
+      start_period: "5s"
+      retries: 3
+    ports:
+      - "${DOCKER_WEB_PORT_API}:8000"
+    restart: "${DOCKER_RESTART_POLICY}"
+    stop_grace_period: "${DOCKER_STOP_GRACE_PERIOD}"
+    volumes:
+      - "${DOCKER_WEB_VOLUME}"
+
+  celery:
+    image: "deployment_celery:latest"
+    command: celery -B -A bhdapi.app:runner worker -l INFO
+    depends_on:
+      - "redis"
+      - "database"
+    env_file:
+      - ".env"
+    restart: "${DOCKER_RESTART_POLICY}"
+    stop_grace_period: "${DOCKER_STOP_GRACE_PERIOD}"
+    volumes:
+      - "${DOCKER_WEB_VOLUME}"
+
+  proxy:
+    build:
+      context: "."
+    image: "deployment_proxy:latest"
+    command: gunicorn -b 0.0.0.0:8002 --log-level=DEBUG --workers=1 --timeout=90 'dproxy.app:app'
+    depends_on:
+      - "api"
+      - "redis"
+      - "database"
+    env_file:
+      - ".env"
+    healthcheck:
+      test: "${DOCKER_HEALTHCHECK_TEST_PROXY}"
+      interval: "60s"
+      timeout: "3s"
+      start_period: "50s"
+      retries: 3
+    ports:
+      - "${DOCKER_WEB_PORT_PROXY}:8002"
+    restart: "${DOCKER_RESTART_POLICY}"
+    stop_grace_period: "${DOCKER_STOP_GRACE_PERIOD}"
+    volumes:
+      - "${DOCKER_WEB_VOLUME}"
+
+volumes:
+  redis: {}
+  database: {}
+
+networks:
+  default:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.57.0/24
+
