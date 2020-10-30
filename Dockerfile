@@ -9,9 +9,6 @@ FROM base AS python-deps
 
 RUN pip install pipenv pytest
 
-RUN apt-get update && apt-get install -y --no-install-recommends gcc python-dev \
-    libsasl2-dev libldap2-dev libbz2-dev libffi-dev default-libmysqlclient-dev
-
 COPY Pipfile .
 COPY Pipfile.lock .
 
