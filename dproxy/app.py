@@ -10,12 +10,23 @@ import connexion
 from dotenv import load_dotenv
 from flask import Flask, request
 
+import logging.handlers
+
+# These should be in .env / Config object.
+MAX_BYTES = 10000
+BACKUP_COUNT = 10
+
+formatter = logging.Formatter("%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s")
+
+rotating_log_handeler = logging.handlers.RotatingFileHandler(Config.LOG_FILE,maxBytes=MAX_BYTES,backupCount=BACKUP_COUNT)
+rotating_log_handeler.setFormatter(formatter)
+rotating_log_handeler.setLevel(logging.DEBUG)
+logging.getLogger('').addHandler(rotating_log_handeler)
 
 if not os.getenv("TOKEN"):
     register_proxy()
 else:
     set_state("ACTIVE")
-
 
 flask_app = connexion.FlaskApp(__name__)
 flask_app.add_api("openapi.yaml", validate_responses=True, strict_validation=True)
