@@ -3,7 +3,6 @@ import requests
 def test_patch_server(proxy_url, secret_key):
     data = {"hostname": "my3.test.unifiedlayer.com",
             "ip": "3.9.112.22",
-            "url": "http://hostname/api/1.0.0",
             "group_id": 1,
             "environment_id": 1,
             "created_by": "twest_client",

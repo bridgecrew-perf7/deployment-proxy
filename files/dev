@@ -1,11 +1,11 @@
 SECRET_KEY=< this needs to match the deployment-api secret_key >
 HOSTNAME=< a fake hostname that you set in /etc/hosts >
 IP=< your local IP >
+VERSION=/api/1.0.0
 STATE=NEW
 ENVIRONMENT=DEVELOPMENT
 LOCATION=PROVO
 DEPLOYMENT_API_URI=http://localhost.localdomain:8000/api/1.0.0
-DEPLOYMENT_PROXY_URI=http://< HOSTNAME >:8002/api/1.0.0
 ENV_FILE=.env
 
 CELERY_BROKER_URL=redis://localhost:6379/0
