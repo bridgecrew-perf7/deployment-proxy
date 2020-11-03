@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 from dproxy.util.config import Config
-from dproxy.util.logger import get_logger
 from dproxy.tasks.runner import make_runner
 from dproxy.util.core import set_state, register_proxy
 

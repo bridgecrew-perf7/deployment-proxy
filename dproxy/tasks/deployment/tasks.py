@@ -6,6 +6,7 @@ import requests
 from flask import current_app
 from celery import subtask
 from celery.utils.log import get_task_logger
+from dproxy.util.config import Config
 
 logger = get_task_logger(__name__)
 runner = make_runner(current_app)
