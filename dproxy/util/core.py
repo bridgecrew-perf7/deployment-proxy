@@ -1,3 +1,4 @@
+from flask import current_app as app
 from dproxy.util.config import Config
 from dproxy.util.http_helper import get_http
 
@@ -5,7 +6,6 @@ import os
 import sys
 from collections import OrderedDict
 from subprocess import check_output, check_call, Popen
-from flask import current_app as app
 
 class LastUpdated(OrderedDict):
     def __setitem__(self, key, value):
@@ -76,6 +76,8 @@ def register_proxy():
     retrieve and cache a token from deployment-api
     """
     try:
+        import logging
+        logger = logging.getLogger("Register")
         data = {
             "hostname": Config.HOSTNAME,
             "ip": Config.IP,
@@ -87,7 +89,7 @@ def register_proxy():
         http = get_http()
         r = http.post(f"{Config.DEPLOYMENT_API_URI}/register/proxy", json=data)
         resp = r.json()
-        app.logger.info(resp)
+        logger.info(resp)
         if "token" in resp:
             update_env("TOKEN", resp["token"])
             os.environ["TOKEN"] = resp["token"]
@@ -96,7 +98,7 @@ def register_proxy():
         else:
             return False
     except Exception as e:
-        app.logger.error(f"Register Proxy Failed: {e}")
+        logger.error(f"Register Proxy Failed: {e}")
         return False
 
 

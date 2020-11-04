@@ -65,6 +65,8 @@ class Config(object):
     DEPLOYMENT_API_URI = get_var("DEPLOYMENT_API_URI")
     ENV_FILE = get_var("ENV_FILE")
     LOG_FILE = os.getenv("LOG_FILE")
+    LOG_MAX_BYTES = os.getenv("LOG_MAX_BYTES")
+    LOG_BACKUP_COUNT = os.getenv("LOG_BACKUP_COUNT")
 
     SECRET_KEY = get_var("SECRET_KEY")
     TOKEN = get_var("TOKEN")
