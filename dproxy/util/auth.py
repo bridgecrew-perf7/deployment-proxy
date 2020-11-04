@@ -25,9 +25,10 @@ def server_token_required(func):
         else:
             response = {
                 "status": "failure",
-                "message": "please provide a valid server token"
+                "message": "please provide a valid server token",
             }
             return jsonify(response), 400
+
     return wrapper
 
 
@@ -40,16 +41,15 @@ def encode_server_token(server):
         payload = {
             "sub": server["hostname"],
             "aud": "deployment-api",
-            "authorization": {
-                "roles": ["server"]
-            },
+            "authorization": {"roles": ["server"]},
             "server_id": server["id"],
             "hostname": server["hostname"],
             "ip": server["ip"],
-            "exp": datetime.datetime.utcnow() + datetime.timedelta(days=1000, seconds=5),
-            "iat": datetime.datetime.utcnow()
+            "exp": datetime.datetime.utcnow()
+            + datetime.timedelta(days=1000, seconds=5),
+            "iat": datetime.datetime.utcnow(),
         }
-        return jwt.encode({'alg': 'HS256'}, payload, Config.SECRET_KEY)
+        return jwt.encode({"alg": "HS256"}, payload, Config.SECRET_KEY)
     except:
         return None
 

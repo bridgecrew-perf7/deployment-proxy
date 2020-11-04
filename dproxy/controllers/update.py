@@ -22,6 +22,6 @@ def post_update():
         response = {
             "status": "failure",
             "message": "Server update failed",
-            "exception": str(e)
+            "exception": str(e),
         }
         return response, 409

@@ -18,9 +18,17 @@ class Watcher(object):
 
     def run(self, inventory):
         if self.task == "rollout":
-            chord([rollout.s(data=host) for host in inventory['hosts']], complete.s(deployment_id=1)).delay()
+            chord(
+                [rollout.s(data=host) for host in inventory["hosts"]],
+                complete.s(deployment_id=1),
+            ).delay()
         elif self.task == "rollback":
-            chord([rollback.s(data=host) for host in inventory['hosts']], complete.s(deployment_id=1)).delay()
+            chord(
+                [rollback.s(data=host) for host in inventory["hosts"]],
+                complete.s(deployment_id=1),
+            ).delay()
         elif self.task == "server_update":
-            chord([server_update.s(data=host) for host in inventory['hosts']], complete.s(deployment_id=1)).delay()
-
+            chord(
+                [server_update.s(data=host) for host in inventory["hosts"]],
+                complete.s(deployment_id=1),
+            ).delay()

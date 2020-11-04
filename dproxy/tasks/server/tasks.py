@@ -4,6 +4,7 @@ import requests
 from flask import current_app
 from dproxy.tasks.runner import make_runner
 from celery.utils.log import get_task_logger
+
 logger = get_task_logger(__name__)
 runner = make_runner(current_app)
 
@@ -25,6 +26,8 @@ def server_history(self, data):
     try:
         cookies = {"access_token_cookie": request.headers["Authorization"]}
         http = get_http
-        http.post(f"{Config.DEPLOYMENT_API_URI}/server/history", cookies=cookies, json=data)
+        http.post(
+            f"{Config.DEPLOYMENT_API_URI}/server/history", cookies=cookies, json=data
+        )
     except Exception as e:
         logger.error(e)

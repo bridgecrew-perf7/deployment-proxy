@@ -28,7 +28,7 @@ def get_http():
         total=int(Config.RETRY),
         backoff_factor=int(Config.BACKOFF_FACTOR),
         status_forcelist=list(Config.STATUS_FORCELIST),
-        method_whitelist=list(Config.METHOD_WHITELIST)
+        method_whitelist=list(Config.METHOD_WHITELIST),
     )
     http = requests.Session()
     http.mount("https://", TimeoutHTTPAdapter(max_retries=retry_strategy))
