@@ -1,7 +1,7 @@
 import pytest
 import datetime
 from dproxy.app import app as application
-from flask_jwt_extended import create_access_token
+#from flask_jwt_extended import create_access_token
 
 
 @pytest.fixture
@@ -18,7 +18,7 @@ def app_context():
 
 @pytest.fixture(scope="module")
 def proxy_url():
-    url = 'http://localhost.localdomain:8002/api/1.0.0'
+    url = 'http://localhost.localdomain:8002/api/v1'
     return url
 
 

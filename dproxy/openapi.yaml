@@ -7,9 +7,9 @@ info:
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  version: 1.0.0
+  version: v1
 servers:
-  - url: /api/1.0.0
+  - url: /api/v1
     description: Bluehost Deployment Proxy
 paths:
   /:
@@ -218,6 +218,12 @@ components:
         ip:
           type: string
           example: 3.94.46.110
+        port:
+          type: string
+          example: 8003
+        api_version:
+          type: string
+          example: v1
         created_by:
           type: string
           example: dclient
@@ -245,6 +251,12 @@ components:
         ip:
           type: string
           example: 3.94.46.110
+        port:
+          type: string
+          example: 8003
+        api_version:
+          type: string
+          example: v1
         group_id:
           type: integer
           example: 1
@@ -284,6 +296,9 @@ components:
         hostname:
           type: string
           example: deploy-proxy.hp.provo1.endurancemb.com
+        port:
+          type: string
+          example: 8002
         hosts:
           type: array
     VersionLock:
@@ -294,4 +309,7 @@ components:
         hostname:
           type: string
           example: my1.test.unifiedlayer.com
+        port:
+          type: string
+          example: 8003
 

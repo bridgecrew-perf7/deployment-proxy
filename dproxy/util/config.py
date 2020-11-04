@@ -59,12 +59,13 @@ class Config(object):
     STATE = get_var("STATE")
     HOSTNAME = get_var("HOSTNAME")
     IP = get_var("IP")
+    PORT = get_var("PORT")
+    API_VERSION = get_var("API_VERSION")
     LOCATION = get_var("LOCATION")
     ENVIRONMENT = get_var("ENVIRONMENT")
-    DEPLOYMENT_PROXY_URI = get_var("DEPLOYMENT_PROXY_URI")
+    DEPLOYMENT_PROXY_URI = "http://"+HOSTNAME+":"+PORT+"/api/"+API_VERSION
     DEPLOYMENT_API_URI = get_var("DEPLOYMENT_API_URI")
     ENV_FILE = get_var("ENV_FILE")
-
     SECRET_KEY = get_var("SECRET_KEY")
     TOKEN = get_var("TOKEN")
 

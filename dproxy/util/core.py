@@ -78,6 +78,8 @@ def register_proxy():
     try:
         data = {
             "hostname": Config.HOSTNAME,
+            "port": Config.PORT,
+            "api_version": Config.API_VERSION,
             "ip": Config.IP,
             "state": "NEW",
             "location": Config.LOCATION,

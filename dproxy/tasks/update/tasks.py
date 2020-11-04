@@ -16,7 +16,7 @@ def server_update(self, data):
     logger.info(f"Starting Update for {data['hostname']}")
     try:
         http = get_http
-        r = http.post(f"{data['hostname']}:8003/update", json=data)
+        r = http.post(f"{data['hostname']}:{data['port']}/update", json=data)
         return jsonify(r.get_json())
     except Exception as e:
         logger.error(e)
