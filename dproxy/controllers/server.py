@@ -12,7 +12,9 @@ logger = get_logger()
 def patch_server():
     data = request.get_json()
     http = get_http()
-    r = http.patch(f"{Config.DEPLOYMENT_API_URI}/server/hostname/{data['hostname']}", json=data)
+    r = http.patch(
+        f"{Config.DEPLOYMENT_API_URI}/server/hostname/{data['hostname']}", json=data
+    )
     resp = r.json()
     logger.info(f"Updated Server: {resp} {r.status_code}")
     return resp, r.status_code
@@ -21,6 +23,8 @@ def patch_server():
 def post_server_history():
     data = request.get_json()
     cookies = {"access_token_cookie": request.headers["Authorization"]}
-    r = requests.post(f"{Config.DEPLOYMENT_API_URI}/server/history", cookies=cookies, json=data)
+    r = requests.post(
+        f"{Config.DEPLOYMENT_API_URI}/server/history", cookies=cookies, json=data
+    )
     resp = r.json()
     return resp, r.status_code

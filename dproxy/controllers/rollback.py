@@ -18,6 +18,6 @@ def post_rollback():
         response = {
             "status": "failure",
             "message": "Rollback failed to start",
-            "exception": str(e)
+            "exception": str(e),
         }
         return response, 409

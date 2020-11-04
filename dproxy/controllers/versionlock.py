@@ -13,7 +13,7 @@ def post_versionlock():
         else:
             response = {
                 "status": "failed",
-                "message": "Unable to find Base64 encoded client url."
+                "message": "Unable to find Base64 encoded client url.",
             }
             return response, 409
     except Exception as e:

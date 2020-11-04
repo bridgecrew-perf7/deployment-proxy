@@ -47,7 +47,7 @@ def update_env(key, value):
         logger.error(f"Update Environment Failed: {e}")
         return False
 
-                
+
 def set_state(state):
     """
     Set the dproxy state in the environment and the deployment-api to the correct state.
@@ -58,8 +58,11 @@ def set_state(state):
         headers = {"Authorization": Config.TOKEN}
         data = {"state": state}
         http = get_http()
-        r = http.patch(f"{Config.DEPLOYMENT_API_URI}/deployment/proxy/hostname/{Config.HOSTNAME}", headers=headers, 
-                       json=data)
+        r = http.patch(
+            f"{Config.DEPLOYMENT_API_URI}/deployment/proxy/hostname/{Config.HOSTNAME}",
+            headers=headers,
+            json=data,
+        )
         resp = r.json()
         logger.debug(f"Updated Proxy: {resp} {r.status_code}")
         update_env("STATE", state)
@@ -82,7 +85,7 @@ def register_proxy():
             "state": "NEW",
             "location": Config.LOCATION,
             "environment": Config.ENVIRONMENT,
-            "created_by": "dproxy"
+            "created_by": "dproxy",
         }
         http = get_http()
         r = http.post(f"{Config.DEPLOYMENT_API_URI}/register/proxy", json=data)
@@ -99,10 +102,10 @@ def register_proxy():
         logger.error(f"Register Proxy Failed: {e}")
         return False
 
-        
+
 def install_pkgs(packages):
-    packages = [x.encode('utf-8') for x in packages]
-    packages = ' '.join(packages)
+    packages = [x.encode("utf-8") for x in packages]
+    packages = " ".join(packages)
     check_call("sudo yum clean all", verbose=False)
     stat = check_call(f"sudo yum -y install {packages}", verbose=False)
     if stat != 0:

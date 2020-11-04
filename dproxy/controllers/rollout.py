@@ -18,6 +18,6 @@ def post_rollout():
         response = {
             "status": "failure",
             "message": "Rollout failed to start",
-            "exception": str(e)
+            "exception": str(e),
         }
         return response, 409

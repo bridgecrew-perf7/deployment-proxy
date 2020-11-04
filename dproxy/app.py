@@ -15,7 +15,7 @@ if not os.getenv("TOKEN"):
     register_proxy()
 else:
     set_state("ACTIVE")
-    
+
 
 flask_app = connexion.FlaskApp(__name__)
 flask_app.add_api("openapi.yaml", validate_responses=True, strict_validation=True)

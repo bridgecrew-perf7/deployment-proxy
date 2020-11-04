@@ -17,17 +17,19 @@ def make_runner(app):
         enable_utc=Config.CELERY_UTC,
         task_default_queue="dproxy",
         database_table_schemas={
-            'task': 'celery',
-            'group': 'celery',
+            "task": "celery",
+            "group": "celery",
         },
         database_table_names={
-            'task': 'dproxy_taskmeta',
-            'group': 'dproxy_groupmeta',
-        }
+            "task": "dproxy_taskmeta",
+            "group": "dproxy_groupmeta",
+        },
     )
 
     runner.conf.update(result_expires=3600)
-    runner.autodiscover_tasks(["dproxy.tasks.deployment", "dproxy.tasks.update", "dproxy.tasks.server"])
+    runner.autodiscover_tasks(
+        ["dproxy.tasks.deployment", "dproxy.tasks.update", "dproxy.tasks.server"]
+    )
 
     class ContextTask(runner.Task):
         def __call__(self, *args, **kwargs):
@@ -41,4 +43,8 @@ def make_runner(app):
 @after_setup_task_logger.connect
 def setup_task_logger(logger, *args, **kwargs):
     for handler in logger.handlers:
-        handler.setFormatter(TaskFormatter("%(asctime)s - %(task_id)s - %(task_name)s - %(name)s - %(levelname)s - %(message)s"))
+        handler.setFormatter(
+            TaskFormatter(
+                "%(asctime)s - %(task_id)s - %(task_name)s - %(name)s - %(levelname)s - %(message)s"
+            )
+        )
