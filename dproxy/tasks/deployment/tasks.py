@@ -16,7 +16,7 @@ def health_check(hosts):
         status_codes = []
         for host in hosts:
             http = get_http
-            r = http.get(f"{host['hostname']}:8003/")
+            r = http.get(f"http://{host['hostname']}:8003/")
             status_codes.append({"hostname": host["hostname"], "status": r.status_code})
         return status_codes
     except Exception as e:
@@ -28,7 +28,7 @@ def health_check(hosts):
 def rollout(self, data=None, callback=None):
     logger.info(f"Starting Rollout for {data['hostname']}")
     http = get_http
-    r = http.post(f"{data['hostname']}:8003/rollout", json=data)
+    r = http.post(f"http://{data['hostname']}:8003/rollout", json=data)
     result = r.json()
     if callback is not None:
         subtask(callback).delay(result)
@@ -39,7 +39,7 @@ def rollout(self, data=None, callback=None):
 def rollback(self, data=None, callback=None):
     logger.info(f"Starting Rollback for {data['hostname']}")
     http = get_http
-    r = http.post(f"{data['hostname']}:8003/rollback", json=data)
+    r = http.post(f"http://{data['hostname']}:8003/rollback", json=data)
     result = r.json()
     if callback is not None:
         subtask(callback).delay(result)
