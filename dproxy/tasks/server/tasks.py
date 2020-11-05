@@ -1,7 +1,7 @@
-from dproxy.utils import get_http
+from dproxy.util.http_helper import get_http
+from dproxy.util.config import Config
 
-import requests
-from flask import current_app
+from flask import current_app, request
 from dproxy.tasks.runner import make_runner
 from celery.utils.log import get_task_logger
 
