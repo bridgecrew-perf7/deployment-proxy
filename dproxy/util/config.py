@@ -63,8 +63,10 @@ class Config(object):
     API_VERSION = get_var("API_VERSION")
     LOCATION = get_var("LOCATION")
     ENVIRONMENT = get_var("ENVIRONMENT")
+    API_HOSTNAME = get_var("API_HOSTNAME")
+    API_PORT = get_var("API_PORT")
     DEPLOYMENT_PROXY_URI = "http://"+HOSTNAME+":"+PORT+"/api/"+API_VERSION
-    DEPLOYMENT_API_URI = get_var("DEPLOYMENT_API_URI")
+    DEPLOYMENT_API_URI = "http://"+API_HOSTNAME+":"+API_PORT+"/api/"+API_VERSION
     ENV_FILE = get_var("ENV_FILE")
 
     LOG_FILE = os.getenv("LOG_FILE")
