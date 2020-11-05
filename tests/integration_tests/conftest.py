@@ -1,7 +1,7 @@
 import pytest
 import datetime
 from dproxy.app import app as application
-#from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token
 
 
 @pytest.fixture
