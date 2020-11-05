@@ -1,4 +1,4 @@
-from dproxy.config import Config
+from dproxy.util.config import Config
 
 import datetime
 from functools import wraps

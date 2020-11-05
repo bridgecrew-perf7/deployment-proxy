@@ -1,13 +1,9 @@
 from dproxy.util.config import Config
-from dproxy.util.logger import get_logger
+from flask import current_app as app
 from dproxy.util.http_helper import get_http
 
-import os
 import requests
 from flask import request
-
-logger = get_logger()
-
 
 def patch_server():
     data = request.get_json()
@@ -16,7 +12,7 @@ def patch_server():
         f"{Config.DEPLOYMENT_API_URI}/server/hostname/{data['hostname']}", json=data
     )
     resp = r.json()
-    logger.info(f"Updated Server: {resp} {r.status_code}")
+    app.logger.info(f"Updated Server: {resp} {r.status_code}")
     return resp, r.status_code
 
 

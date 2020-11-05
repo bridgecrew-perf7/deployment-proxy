@@ -1,3 +1,9 @@
+from flask import current_app as app
+
 def get_healthcheck():
-    response = {"status": "success", "message": "proxy is healthy"}
+    app.logger.info("HealthCheck!")
+    response = {
+        "status": "success",
+        "message": "proxy is healthy"
+    }
     return response, 200

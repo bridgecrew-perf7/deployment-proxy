@@ -1,13 +1,11 @@
+from flask import current_app as app
 from dproxy.util.config import Config
-from dproxy.util.logger import get_logger
 from dproxy.util.http_helper import get_http
 
 import os
 import sys
 from collections import OrderedDict
 from subprocess import check_output, check_call, Popen
-
-logger = get_logger()
 
 
 class LastUpdated(OrderedDict):
@@ -44,11 +42,11 @@ def update_env(key, value):
                     f.write(line + "\n")
         return True
     except Exception as e:
-        logger.error(f"Update Environment Failed: {e}")
+        app.logger.error(f"Update Environment Failed: {e}")
         return False
 
 
-def set_state(state):
+def set_state(app, state):
     """
     Set the dproxy state in the environment and the deployment-api to the correct state.
     :param: state enum[NEW ACTIVE UPDATING ERROR DISABLED]
@@ -64,16 +62,16 @@ def set_state(state):
             json=data,
         )
         resp = r.json()
-        logger.debug(f"Updated Proxy: {resp} {r.status_code}")
+        app.logger.debug(f"Updated Proxy: {resp} {r.status_code}")
         update_env("STATE", state)
         os.environ["STATE"] = state
         return True
     except Exception as e:
-        logger.error(f"SET STATE FAILED: {e}")
+        app.logger.error(f"SET STATE FAILED: {e}")
         return False
 
 
-def register_proxy():
+def register_proxy(app):
     """
     Register a new proxy
     retrieve and cache a token from deployment-api
@@ -92,7 +90,7 @@ def register_proxy():
         http = get_http()
         r = http.post(f"{Config.DEPLOYMENT_API_URI}/register/proxy", json=data)
         resp = r.json()
-        logger.info(resp)
+        app.logger.debug(resp)
         if "token" in resp:
             update_env("TOKEN", resp["token"])
             os.environ["TOKEN"] = resp["token"]
@@ -101,7 +99,7 @@ def register_proxy():
         else:
             return False
     except Exception as e:
-        logger.error(f"Register Proxy Failed: {e}")
+        app.logger.error(f"Register Proxy Failed: {e}")
         return False
 
 

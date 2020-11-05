@@ -8,6 +8,9 @@ ENVIRONMENT=DEVELOPMENT
 LOCATION=PROVO
 DEPLOYMENT_API_URI=http://localhost.localdomain:8000/api/v1
 ENV_FILE=.env
+LOG_FILE=./deployment-proxy.log
+LOG_MAX_BYTES=10000
+LOG_BACKUP_COUNT=10
 
 CELERY_BROKER_URL=redis://localhost:6379/0
 CELERY_RESULT_BACKEND=redis://localhost:6379/0
