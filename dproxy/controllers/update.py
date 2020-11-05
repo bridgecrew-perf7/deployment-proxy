@@ -15,13 +15,13 @@ def post_update():
             proxy_update.apply_async(args=[data])
         response = {
             "status": "success",
-            "message": "Server update started",
+            "message": "Server update started"
         }
         return response, 202
     except Exception as e:
         response = {
             "status": "failure",
             "message": "Server update failed",
-            "exception": str(e),
+            "exception": str(e)
         }
         return response, 409

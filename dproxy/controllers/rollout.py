@@ -11,13 +11,13 @@ def post_rollout():
         Watcher("rollout", inventory)
         response = {
             "status": "success",
-            "message": "Rollout successfully started",
+            "message": "Rollout successfully started"
         }
         return response, 202
     except Exception as e:
         response = {
             "status": "failure",
             "message": "Rollout failed to start",
-            "exception": str(e),
+            "exception": str(e)
         }
         return response, 409

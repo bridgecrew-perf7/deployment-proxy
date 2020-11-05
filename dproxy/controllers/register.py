@@ -15,13 +15,13 @@ def post_register_server():
         response = {
             "status": "success",
             "message": "Server successfully registered",
-            "token": resp["token"],
+            "token": resp["token"]
         }
         return response, 201
     except Exception as e:
         response = {
             "status": "failure",
             "message": "Register server failed",
-            "exception": str(e),
+            "exception": str(e)
         }
         return response, 409
