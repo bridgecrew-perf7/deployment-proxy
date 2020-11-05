@@ -16,10 +16,6 @@ rotating_log_handeler.setFormatter(formatter)
 rotating_log_handeler.setLevel(logging.DEBUG)
 logging.getLogger('').addHandler(rotating_log_handeler)
 
-if not os.getenv("TOKEN"):
-    register_proxy()
-else:
-    set_state("ACTIVE")
 
 flask_app = connexion.FlaskApp(__name__)
 flask_app.add_api("openapi.yaml", validate_responses=True, strict_validation=True)
@@ -27,3 +23,7 @@ app = flask_app.app
 app.config.from_object(Config)
 with app.app_context():
     runner = make_runner(app)
+    if not os.getenv("TOKEN"):
+        register_proxy(app)
+    else:
+        set_state(app, "ACTIVE")
