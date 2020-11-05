@@ -94,7 +94,7 @@ def register_proxy(app):
         if "token" in resp:
             update_env("TOKEN", resp["token"])
             os.environ["TOKEN"] = resp["token"]
-            set_state("ACTIVE")
+            set_state(app, "ACTIVE")
             return True
         else:
             return False
