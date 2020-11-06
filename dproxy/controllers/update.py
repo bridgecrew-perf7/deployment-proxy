@@ -13,10 +13,7 @@ def post_update():
             Watcher("server_update", inventory)
         elif "hostname" in inventory and inventory["hostname"] == Config.HOSTNAME:
             proxy_update.apply_async(args=[data])
-        response = {
-            "status": "success",
-            "message": "Server update started",
-        }
+        response = {"status": "success", "message": "Server update started"}
         return response, 202
     except Exception as e:
         response = {

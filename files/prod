@@ -1,10 +1,13 @@
 SECRET_KEY=6PV^cb&3DUHQ%98fxqryoNJ3Y0HNy1G^g@8NPgIV$jj*U2nuPB^C!C5xby$CATs*I!tUEZZ!e7ooeTiGzIiV#%j%DCWS3hpWLetS
 HOSTNAME=deploy-proxy.hp.provo1.endurancemb.com
 IP=10.24.246.11
+PORT=8002
+VERSION=v1
 STATE=NEW
 ENVIRONMENT=PRODUCTION
 LOCATION=PROVO
-DEPLOYMENT_API_URI=https://deployment.unifiedlayer.com/api/1.0.0
+API_HOSTNAME=deployment.unifiedlayer.com
+API_PORT=8000
 ENV_FILE=/etc/default/dproxy
 
 CELERY_BROKER_URL=redis://localhost:6379/0

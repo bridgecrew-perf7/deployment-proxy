@@ -7,9 +7,9 @@ info:
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  version: 1.0.0
+  version: v1
 servers:
-  - url: /api/1.0.0
+  - url: /api/v1
     description: Bluehost Deployment Proxy
 paths:
   /:
@@ -123,16 +123,16 @@ paths:
       responses:
         default:
           description: successful operation
-  /versionlock/{url}:
+  /versionlock/{hostname}:
     get:
       tags:
       - admins
       summary: Get server versionlock
       operationId: dproxy.controllers.versionlock.get_versionlock
       parameters:
-      - name: url
+      - name: hostname
         in: path
-        description: a base64 encoded server endpoint url.
+        description: a base64 encoded server endpoint hostname.
         required: true
         style: simple
         explode: false
@@ -146,7 +146,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/VersionLock'
         "400":
-          description: Invalid URL supplied
+          description: Invalid hostname supplied
         "404":
           description: Server versionlock not found
 components:
@@ -218,6 +218,12 @@ components:
         ip:
           type: string
           example: 3.94.46.110
+        port:
+          type: string
+          example: 8003
+        api_version:
+          type: string
+          example: v1
         created_by:
           type: string
           example: dclient
@@ -236,9 +242,6 @@ components:
         deployment_proxy:
           type: string
           example: deploy-proxy.hp.provo1.endurancemb.com
-        url:
-          type: string
-          example: http://www0.hp.provo1.endurancemb.com:8003
     Server:
       type: object
       properties:
@@ -248,9 +251,12 @@ components:
         ip:
           type: string
           example: 3.94.46.110
-        url:
+        port:
           type: string
-          example: http://hostname/api/1.0.0
+          example: 8003
+        api_version:
+          type: string
+          example: v1
         group_id:
           type: integer
           example: 1
@@ -290,6 +296,9 @@ components:
         hostname:
           type: string
           example: deploy-proxy.hp.provo1.endurancemb.com
+        port:
+          type: string
+          example: 8002
         hosts:
           type: array
     VersionLock:
@@ -297,6 +306,10 @@ components:
       properties:
         versionlock:
           type: array
-        url:
+        hostname:
           type: string
-          example: http://deployment-client.unifiedlayer.com
+          example: my1.test.unifiedlayer.com
+        port:
+          type: string
+          example: 8003
+

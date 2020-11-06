@@ -26,12 +26,12 @@ setup(
         "requests",
         "flask",
         "gunicorn",
-	"python-dotenv",
-	"authlib",
-	"celery",
-	"redis",
-	"connexion",
-	"swagger-ui-bundle"
+        "python-dotenv",
+        "authlib",
+        "celery",
+        "redis",
+        "connexion",
+        "swagger-ui-bundle",
     ],
-    python_requires=">=3.6"
+    python_requires=">=3.6",
 )

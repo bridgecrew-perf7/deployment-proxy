@@ -79,6 +79,8 @@ def register_proxy(app):
     try:
         data = {
             "hostname": Config.HOSTNAME,
+            "port": Config.PORT,
+            "api_version": Config.API_VERSION,
             "ip": Config.IP,
             "state": "NEW",
             "location": Config.LOCATION,
@@ -92,7 +94,7 @@ def register_proxy(app):
         if "token" in resp:
             update_env("TOKEN", resp["token"])
             os.environ["TOKEN"] = resp["token"]
-            set_state("ACTIVE")
+            set_state(app, "ACTIVE")
             return True
         else:
             return False
