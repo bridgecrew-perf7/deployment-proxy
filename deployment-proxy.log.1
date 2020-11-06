@@ -1,0 +1,115 @@
+2020-11-05 13:56:27,417 ERROR dproxy.app MainThread : Exception on /api/v1/versionlock [POST]
+Traceback (most recent call last):
+  File "/Users/rgupta/.local/share/virtualenvs/deployment-proxy-XM-LaOc-/lib/python3.8/site-packages/urllib3/connection.py", line 159, in _new_conn
+    conn = connection.create_connection(
+  File "/Users/rgupta/.local/share/virtualenvs/deployment-proxy-XM-LaOc-/lib/python3.8/site-packages/urllib3/util/connection.py", line 84, in create_connection
+    raise err
+  File "/Users/rgupta/.local/share/virtualenvs/deployment-proxy-XM-LaOc-/lib/python3.8/site-packages/urllib3/util/connection.py", line 74, in create_connection
+    sock.connect(sa)
+TimeoutError: [Errno 60] Operation timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/rgupta/.local/share/virtualenvs/deployment-proxy-XM-LaOc-/lib/python3.8/site-packages/urllib3/connectionpool.py", line 670, in urlopen
+    httplib_response = self._make_request(
+  File "/Users/rgupta/.local/share/virtualenvs/deployment-proxy-XM-LaOc-/lib/python3.8/site-packages/urllib3/connectionpool.py", line 392, in _make_request
+    conn.request(method, url, **httplib_request_kw)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/http/client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/http/client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/http/client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/http/client.py", line 1004, in _send_output
+    self.send(msg)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/http/client.py", line 944, in send
+    self.connect()
+  File "/Users/rgupta/.local/share/virtualenvs/deployment-proxy-XM-LaOc-/lib/python3.8/site-packages/urllib3/connection.py", line 187, in connect
+    conn = self._new_conn()
+  File "/Users/rgupta/.local/share/virtualenvs/deployment-proxy-XM-LaOc-/lib/python3.8/site-packages/urllib3/connection.py", line 171, in _new_conn
+    raise NewConnectionError(
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x7f820af3a7c0>: Failed to establish a new connection: [Errno 60] Operation timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/rgupta/.local/share/virtualenvs/deployment-proxy-XM-LaOc-/lib/python3.8/site-packages/requests/adapters.py", line 439, in send
+    resp = conn.urlopen(
+  File "/Users/rgupta/.local/share/virtualenvs/deployment-proxy-XM-LaOc-/lib/python3.8/site-packages/urllib3/connectionpool.py", line 726, in urlopen
+    retries = retries.increment(
+  File "/Users/rgupta/.local/share/virtualenvs/deployment-proxy-XM-LaOc-/lib/python3.8/site-packages/urllib3/util/retry.py", line 446, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='my3.test.unifiedlayer.com', port=8003): Max retries exceeded with url: /versionlock (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f820af3a7c0>: Failed to establish a new connection: [Errno 60] Operation timed out'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/rgupta/deployment-proxy/dproxy/controllers/versionlock.py", line 11, in post_versionlock
+    r = requests.post(f"http://{data['hostname']}:{data['port']}/versionlock", json=data)
+  File "/Users/rgupta/.local/share/virtualenvs/deployment-proxy-XM-LaOc-/lib/python3.8/site-packages/requests/api.py", line 119, in post
+    return request('post', url, data=data, json=json, **kwargs)
+  File "/Users/rgupta/.local/share/virtualenvs/deployment-proxy-XM-LaOc-/lib/python3.8/site-packages/requests/api.py", line 61, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/Users/rgupta/.local/share/virtualenvs/deployment-proxy-XM-LaOc-/lib/python3.8/site-packages/requests/sessions.py", line 530, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/Users/rgupta/.local/share/virtualenvs/deployment-proxy-XM-LaOc-/lib/python3.8/site-packages/requests/sessions.py", line 643, in send
+    r = adapter.send(request, **kwargs)
+  File "/Users/rgupta/.local/share/virtualenvs/deployment-proxy-XM-LaOc-/lib/python3.8/site-packages/requests/adapters.py", line 516, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPConnectionPool(host='my3.test.unifiedlayer.com', port=8003): Max retries exceeded with url: /versionlock (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f820af3a7c0>: Failed to establish a new connection: [Errno 60] Operation timed out'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/rgupta/.local/share/virtualenvs/deployment-proxy-XM-LaOc-/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/rgupta/.local/share/virtualenvs/deployment-proxy-XM-LaOc-/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/rgupta/.local/share/virtualenvs/deployment-proxy-XM-LaOc-/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Users/rgupta/.local/share/virtualenvs/deployment-proxy-XM-LaOc-/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/Users/rgupta/.local/share/virtualenvs/deployment-proxy-XM-LaOc-/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/rgupta/.local/share/virtualenvs/deployment-proxy-XM-LaOc-/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Users/rgupta/.local/share/virtualenvs/deployment-proxy-XM-LaOc-/lib/python3.8/site-packages/connexion/decorators/decorator.py", line 48, in wrapper
+    response = function(request)
+  File "/Users/rgupta/.local/share/virtualenvs/deployment-proxy-XM-LaOc-/lib/python3.8/site-packages/connexion/decorators/uri_parsing.py", line 144, in wrapper
+    response = function(request)
+  File "/Users/rgupta/.local/share/virtualenvs/deployment-proxy-XM-LaOc-/lib/python3.8/site-packages/connexion/decorators/validation.py", line 184, in wrapper
+    response = function(request)
+  File "/Users/rgupta/.local/share/virtualenvs/deployment-proxy-XM-LaOc-/lib/python3.8/site-packages/connexion/decorators/response.py", line 103, in wrapper
+    response = function(request)
+  File "/Users/rgupta/.local/share/virtualenvs/deployment-proxy-XM-LaOc-/lib/python3.8/site-packages/connexion/decorators/parameter.py", line 121, in wrapper
+    return function(**kwargs)
+  File "/Users/rgupta/deployment-proxy/dproxy/controllers/versionlock.py", line 23, in post_versionlock
+    raise Exception(f"Unable to Post versionlock: {e}")
+Exception: Unable to Post versionlock: HTTPConnectionPool(host='my3.test.unifiedlayer.com', port=8003): Max retries exceeded with url: /versionlock (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f820af3a7c0>: Failed to establish a new connection: [Errno 60] Operation timed out'))
+2020-11-05 13:56:27,573 ERROR connexion.decorators.validation MainThread : http://localhost.localdomain:8002/api/v1/versionlock validation error: None is not of type 'object'
+2020-11-05 15:00:43,107 ERROR dproxy.app MainThread : Register Proxy Failed: set_state() missing 1 required positional argument: 'state'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
