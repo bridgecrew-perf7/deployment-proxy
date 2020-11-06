@@ -22,7 +22,7 @@ def proxy_url():
     hostname = os.environ["HOSTNAME"]
     port = os.environ["PORT"]
     api_version = os.environ["API_VERSION"]
-    url = 'http://{}:{}/api/{}'.format(hostname, port, api_version)
+    url = "http://{}:{}/api/{}".format(hostname, port, api_version)
     return url
 
 
@@ -45,14 +45,14 @@ def server_auth_cookie(app):
         "lastname": "tester",
         "email": "server.tester@test.com",
         "exp": datetime.datetime.utcnow() + datetime.timedelta(seconds=600),
-        "iat": datetime.datetime.utcnow()
+        "iat": datetime.datetime.utcnow(),
     }
 
     with app.app_context():
-        access_token = create_access_token(identity="servertester", fresh=True, user_claims=claims)
+        access_token = create_access_token(
+            identity="servertester", fresh=True, user_claims=claims
+        )
 
-    cookie = {
-        "access_token_cookie": access_token
-    }
+    cookie = {"access_token_cookie": access_token}
 
     return cookie

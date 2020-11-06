@@ -5,6 +5,7 @@ from dproxy.util.http_helper import get_http
 import requests
 from flask import request
 
+
 def patch_server():
     data = request.get_json()
     http = get_http()

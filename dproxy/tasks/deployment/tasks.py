@@ -18,7 +18,13 @@ def health_check(hosts):
         for host in hosts:
             http = get_http
             r = http.get(f"http://{host['hostname']}:{host['port']}/")
-            status_codes.append({"hostname": host["hostname"], "port": host["port"], "status": r.status_code})
+            status_codes.append(
+                {
+                    "hostname": host["hostname"],
+                    "port": host["port"],
+                    "status": r.status_code,
+                }
+            )
         return status_codes
     except Exception as e:
         logger.error(e)

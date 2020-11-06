@@ -9,15 +9,12 @@ def post_rollback():
     inventory = request.get_json()
     try:
         Watcher("rollback", inventory)
-        response = {
-            "status": "success",
-            "message": "Rollback successfully started"
-        }
+        response = {"status": "success", "message": "Rollback successfully started"}
         return response, 202
     except Exception as e:
         response = {
             "status": "failure",
             "message": "Rollback failed to start",
-            "exception": str(e)
+            "exception": str(e),
         }
         return response, 409
