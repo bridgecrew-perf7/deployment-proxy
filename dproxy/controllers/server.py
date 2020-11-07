@@ -1,9 +1,10 @@
 from dproxy.util.config import Config
-from flask import current_app as app
 from dproxy.util.http_helper import get_http
 
 import requests
 from flask import request
+from flask import current_app as app
+
 
 def patch_server():
     data = request.get_json()
@@ -12,7 +13,7 @@ def patch_server():
         f"{Config.DEPLOYMENT_API_URI}/server/hostname/{data['hostname']}", json=data
     )
     resp = r.json()
-    app.logger.info(f"Updated Server: {resp} {r.status_code}")
+    app.logger.debug(f"Updated Server: {resp} {r.status_code}")
     return resp, r.status_code
 
 
@@ -23,4 +24,5 @@ def post_server_history():
         f"{Config.DEPLOYMENT_API_URI}/server/history", cookies=cookies, json=data
     )
     resp = r.json()
+    app.logger.debug(f"Post Server History: {resp} {r.status_code}")
     return resp, r.status_code
