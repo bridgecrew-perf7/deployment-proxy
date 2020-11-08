@@ -46,7 +46,7 @@ def update_env(key, value):
         return False
 
 
-def set_state(app, state):
+def set_state(state):
     """
     Set the dproxy state in the environment and the deployment-api to the correct state.
     :param: state enum[NEW ACTIVE UPDATING ERROR DISABLED]
@@ -71,7 +71,7 @@ def set_state(app, state):
         return False
 
 
-def register_proxy(app):
+def register_proxy():
     """
     Register a new proxy
     retrieve and cache a token from deployment-api
@@ -82,12 +82,13 @@ def register_proxy(app):
             "port": Config.PORT,
             "api_version": Config.API_VERSION,
             "ip": Config.IP,
-            "port": "8002",
             "state": "NEW",
             "location": Config.LOCATION,
             "environment": Config.ENVIRONMENT,
             "created_by": "dproxy",
         }
+        app.logger.info(data)
+        app.logger.info(f"{Config.DEPLOYMENT_API_URI}/register/proxy")
         http = get_http()
         r = http.post(f"{Config.DEPLOYMENT_API_URI}/register/proxy", json=data)
         resp = r.json()

@@ -32,6 +32,7 @@ def get_config():
             for line in cfg:
                 try:
                     (k, v) = line.split("=", 1)
+                    v = v.rstrip("\n")
                     config[k] = v
                 except:
                     pass
@@ -65,10 +66,8 @@ class Config(object):
     ENVIRONMENT = get_var("ENVIRONMENT")
     API_HOSTNAME = get_var("API_HOSTNAME")
     API_PORT = get_var("API_PORT")
-    DEPLOYMENT_PROXY_URI = "http://" + HOSTNAME + ":" + PORT + "/api/" + API_VERSION
-    DEPLOYMENT_API_URI = (
-        "http://" + API_HOSTNAME + ":" + API_PORT + "/api/" + API_VERSION
-    )
+    DEPLOYMENT_PROXY_URI = f"http://{HOSTNAME}:{PORT}/api/{API_VERSION}"
+    DEPLOYMENT_API_URI = f"http://{API_HOSTNAME}:{API_PORT}/api/{API_VERSION}"
     ENV_FILE = get_var("ENV_FILE")
     LOG_FILE = get_var("LOG_FILE")
     LOG_MAX_BYTES = get_var("LOG_MAX_BYTES")
