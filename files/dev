@@ -1,11 +1,13 @@
 SECRET_KEY=< this needs to match the deployment-api secret_key >
 HOSTNAME=< a fake hostname that you set in /etc/hosts >
 IP=< your local IP >
+PORT=8002
+API_VERSION=v1
 STATE=NEW
 ENVIRONMENT=DEVELOPMENT
 LOCATION=PROVO
-DEPLOYMENT_API_URI=http://localhost.localdomain:8000/api/1.0.0
-DEPLOYMENT_PROXY_URI=http://< HOSTNAME >:8002/api/1.0.0
+API_HOSTNAME=localhost.localdomain
+API_PORT=8000
 ENV_FILE=.env
 LOG_FILE=./deployment-proxy.log
 LOG_MAX_BYTES=10000

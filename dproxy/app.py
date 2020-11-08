@@ -8,13 +8,18 @@ import connexion
 
 import logging.handlers
 
-formatter = logging.Formatter("%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s")
+formatter = logging.Formatter(
+    "%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s"
+)
 
-rotating_log_handeler = logging.handlers.RotatingFileHandler(Config.LOG_FILE, maxBytes=int(Config.LOG_MAX_BYTES),
-                                                             backupCount=int(Config.LOG_BACKUP_COUNT))
+rotating_log_handeler = logging.handlers.RotatingFileHandler(
+    Config.LOG_FILE,
+    maxBytes=int(Config.LOG_MAX_BYTES),
+    backupCount=int(Config.LOG_BACKUP_COUNT),
+)
 rotating_log_handeler.setFormatter(formatter)
 rotating_log_handeler.setLevel(logging.DEBUG)
-logging.getLogger('').addHandler(rotating_log_handeler)
+logging.getLogger("").addHandler(rotating_log_handeler)
 
 
 flask_app = connexion.FlaskApp(__name__)
