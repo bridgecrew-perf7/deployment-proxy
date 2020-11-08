@@ -80,6 +80,7 @@ def register_proxy(app):
         data = {
             "hostname": Config.HOSTNAME,
             "ip": Config.IP,
+            "port": "8002",
             "state": "NEW",
             "location": Config.LOCATION,
             "environment": Config.ENVIRONMENT,
