@@ -221,7 +221,10 @@ components:
         port:
           type: string
           example: 8003
-        api_version:
+        protocol:
+          type: string
+          example: https
+        version:
           type: string
           example: v1
         created_by:
@@ -254,7 +257,10 @@ components:
         port:
           type: string
           example: 8003
-        api_version:
+        protocol:
+          type: string
+          example: https
+        version:
           type: string
           example: v1
         group_id:

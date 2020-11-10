@@ -6,7 +6,6 @@ from flask import request
 from flask import current_app as app
 
 
-
 def patch_server():
     data = request.get_json()
     http = get_http()
