@@ -312,6 +312,7 @@ components:
       properties:
         versionlock:
           type: array
+          example: ["eig-hp-hp_my-20200527-1.b44ee87.el7.noarch.rpm", "eig-hp-hp_my-20200610-1.b44ee87.el7.noarch.rpm"]
         hostname:
           type: string
           example: my1.test.unifiedlayer.com
