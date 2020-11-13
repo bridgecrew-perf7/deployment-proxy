@@ -1,0 +1,2 @@
+SECRET_KEY=< this secret key must match the deployment-api secret key >
+STATE=NEW

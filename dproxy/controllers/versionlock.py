@@ -3,29 +3,10 @@ from flask import request
 from dproxy.util.http_helper import get_http
 
 
-def post_versionlock():
-    data = request.get_json()
-    try:
-        if "hostname" in data:
-            r = requests.post(
-                f"http://{data['hostname']}:{data['port']}/versionlock", json=data
-            )
-            resp = r.json()
-            return resp, 201
-        else:
-            response = {
-                "status": "failed",
-                "message": "Unable to find Base64 encoded client url.",
-            }
-            return response, 409
-    except Exception as e:
-        raise Exception(f"Unable to Post versionlock: {e}")
-
-
-def get_versionlock(hostname, port):
+def get_versionlock(protocol, hostname, port, version):
     try:
         http = get_http
-        r = http.get(f"http://{hostname}:{port}/versionlock", json=data)
+        r = http.get(f"{protocol}://{hostname}:{port}/api/{version}/versionlock", json=data)
         resp = r.json()
         return resp, 201
     except Exception as e:

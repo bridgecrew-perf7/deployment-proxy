@@ -16,6 +16,7 @@ def post_register_server():
         response = {
             "status": "success",
             "message": "Server successfully registered",
+            "server": resp["server"],
             "token": resp["token"],
         }
         return response, 201

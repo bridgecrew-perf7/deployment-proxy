@@ -1,82 +1,89 @@
-# All values can be overwritten by using environment variables.
-# default environment file /etc/default/dproxy
-# set environment file export ENV_FILE=
-# default configuration file /etc/deployment/dproxy.conf
-# set configuration file export CONFIG_FILE=
+SECRET_KEY=< this needs to match the deployment-api secret_key >
+STATE=NEW
 
-# hostname to use for the deployment-proxy
-# must be resolveable and reachable from the deployment-api and deployment-clients
-HOSTNAME="deploy-proxy.hp.provo1.endurancemb.com"
-IP="10.24.246.11"
-API_VERSION="v1"
-PORT="8002"
+# hostname to use for the deployment proxy
+# must be resolveable and reachable from the deployment api and deployment clients
+HOSTNAME=deploy-proxy.unifiedlayer.com
+# deployment proxy ip address
+IP=192.168.1.118
+# deployment proxy port
+PORT=8002
+# deployment proxy protocol
+PROTOCOL=http
+# deployment proxy api version
+VERSION=v1
 
-# api endpoint url for the deployment-proxy
-# running on port 8002
-# api version v1
-#DEPLOYMENT_PROXY_URI="http://$HOSTNAME:$PORT/api/$API_VERSION"
+# which datacenter is this proxy located in
+LOCATION=Provo
+
+# which environment is this proxy located in
+# Example: ALPHA, BETA, STAGING, PRODUCTION
+ENVIRONMENT=ALPHA
 
 # api endpoint url for the deployment-api
 # running on port 443 behind nginx (port 8000)
 # api version v1
-API_HOSTNAME="localhost.localdomain"
-API_PORT="8000"
+API_PROTOCOL=http
+API_HOSTNAME=localhost.localdomain
+API_PORT=8000
+API_VERSION=v1
+
 # the environment file to load environment variables from.
 # default /etc/default/dproxy
-ENV_FILE="/etc/default/dproxy"
+ENV_FILE=.env
 
 # using redis at localhost for both celeryd broker and results
-CELERY_BROKER_URL="redis://localhost:6379/0"
-CELERY_RESULT_BACKEND="redis://localhost:6379/0"
+CELERY_BROKER_URL=redis://localhost:6379/0
+CELERY_RESULT_BACKEND=redis://localhost:6379/0
 
 # serializing message to json
-CELERY_TASK_SERIALIZER="json"
-CELERY_RESULT_SERIALIZER="json"
+CELERY_TASK_SERIALIZER=json
+CELERY_RESULT_SERIALIZER=json
 CELERY_ACCEPT_CONTENT=["json","application/text"]
 
 # using timezone UTC
-CELERY_TIMEZONE="UTC"
-CELERY_UTC="True"
+CELERY_TIMEZONE=UTC
+CELERY_UTC=True
 
 # Names of nodes to start
 #   most people will only start one node:
-CELERYD_NODES="worker1 worker2 worker3 worker4"
+CELERYD_NODES=worker1, worker2, worker3, worker4
 #   but you can also start multiple and configure settings
 #   for each in CELERYD_OPTS
-#CELERYD_NODES="worker1 worker2 worker3"
+#CELERYD_NODES="worker1 worker2 worker3 worker4"
 #   alternatively, you can specify the number of nodes to start:
 #CELERYD_NODES=10
 
 # Absolute or relative path to the 'celery' command:
-CELERY_BIN="/usr/local/bin/celery"
-#CELERY_BIN="/virtualenvs/def/bin/celery"
+CELERY_BIN=/usr/local/bin/celery
+#CELERY_BIN=/virtualenvs/def/bin/celery
 
 # App instance to use
 # comment out this line if you don't use an app
-CELERY_APP="dproxy.runner.runner:app"
+CELERY_APP=dproxy.runner.runner:app
 # or fully qualified:
 #CELERY_APP="proj.tasks:app"
 
 # Where to chdir at start.
-CELERYD_CHDIR="/opt/deployment/"
+CELERYD_CHDIR=/opt/deployment/
 
 # Extra command-line arguments to the worker
-CELERYD_OPTS="--time-limit=300 --concurrency=8"
+CELERYD_OPTS=--time-limit=300 --concurrency=8
 # Configure node-specific settings by appending node name to arguments:
 #CELERYD_OPTS="--time-limit=300 -c 8 -c:worker2 4 -c:worker3 2 -Ofair:worker1"
 
 # Set logging level
-CELERYD_LOG_LEVEL="INFO"
+CELERYD_LOG_LEVEL=DEBUG
 
 # %n will be replaced with the first part of the nodename.
-CELERYD_LOG_FILE="/var/log/celery/%n%I.log"
-CELERYD_PID_FILE="/var/run/celery/%n.pid"
+CELERYD_LOG_FILE=celery/%n%I.log
+CELERYD_PID_FILE=celery/%n.pid
 
 # Workers should run as an unprivileged user.
 #   You need to create this user manually (or you can choose
 #   a user/group combination that already exists (e.g., nobody).
-CELERYD_USER="hp_deploy"
-CELERYD_GROUP="hp_deploy"
+CELERYD_USER=hp_deploy
+CELERYD_GROUP=hp_deploy
 
 # If enabled pid and log directories will be created if missing,
 # and owned by the userid/group configured.
@@ -98,7 +105,12 @@ METHOD_WHITELIST=["HEAD", "GET", "OPTIONS", "TRACE", "DELETE", "PUT", "PATCH", "
 # default timeout in seconds
 DEFAULT_TIMEOUT=30
 # default log file name
-LOG_FILE=./deployment-proxy.log
+
+# LOG CONFIGURATION
+# set log level
+LOG_LEVEL=DEBUG
+# set log file
+LOG_FILE=dproxy.log
 # max file size before roll
 LOG_MAX_BYTES=1000000
 # number of previous logs to retain

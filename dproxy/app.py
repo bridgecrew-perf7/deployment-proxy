@@ -29,6 +29,6 @@ app.config.from_object(Config)
 with app.app_context():
     runner = make_runner(app)
     if not os.getenv("TOKEN"):
-        register_proxy(app)
+        register_proxy()
     else:
-        set_state(app, "ACTIVE")
+        set_state("ACTIVE")

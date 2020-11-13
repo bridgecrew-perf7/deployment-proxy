@@ -32,6 +32,7 @@ def get_config():
             for line in cfg:
                 try:
                     (k, v) = line.split("=", 1)
+                    v = v.rstrip("\n")
                     config[k] = v
                 except:
                     pass
@@ -60,20 +61,20 @@ class Config(object):
     HOSTNAME = get_var("HOSTNAME")
     IP = get_var("IP")
     PORT = get_var("PORT")
-    API_VERSION = get_var("API_VERSION")
+    PROTOCOL = get_var("PROTOCOL")
+    VERSION = get_var("VERSION")
     LOCATION = get_var("LOCATION")
     ENVIRONMENT = get_var("ENVIRONMENT")
     API_HOSTNAME = get_var("API_HOSTNAME")
     API_PORT = get_var("API_PORT")
-    DEPLOYMENT_PROXY_URI = "http://" + HOSTNAME + ":" + PORT + "/api/" + API_VERSION
-    DEPLOYMENT_API_URI = (
-        "http://" + API_HOSTNAME + ":" + API_PORT + "/api/" + API_VERSION
-    )
+    API_PROTOCOL = get_var("API_PROTOCOL")
+    API_VERSION = get_var("API_VERSION")
+    DEPLOYMENT_PROXY_URI = f"{PROTOCOL}://{HOSTNAME}:{PORT}/api/{VERSION}"
+    DEPLOYMENT_API_URI = f"{API_PROTOCOL}://{API_HOSTNAME}:{API_PORT}/api/{API_VERSION}"
     ENV_FILE = get_var("ENV_FILE")
-
-    LOG_FILE = os.getenv("LOG_FILE")
-    LOG_MAX_BYTES = os.getenv("LOG_MAX_BYTES")
-    LOG_BACKUP_COUNT = os.getenv("LOG_BACKUP_COUNT")
+    LOG_FILE = get_var("LOG_FILE")
+    LOG_MAX_BYTES = get_var("LOG_MAX_BYTES")
+    LOG_BACKUP_COUNT = get_var("LOG_BACKUP_COUNT")
 
     SECRET_KEY = get_var("SECRET_KEY")
     TOKEN = get_var("TOKEN")

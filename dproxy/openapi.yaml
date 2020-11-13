@@ -221,7 +221,10 @@ components:
         port:
           type: string
           example: 8003
-        api_version:
+        protocol:
+          type: string
+          example: https
+        version:
           type: string
           example: v1
         created_by:
@@ -254,7 +257,10 @@ components:
         port:
           type: string
           example: 8003
-        api_version:
+        protocol:
+          type: string
+          example: https
+        version:
           type: string
           example: v1
         group_id:
@@ -306,6 +312,7 @@ components:
       properties:
         versionlock:
           type: array
+          example: ["eig-hp-hp_my-20200527-1.b44ee87.el7.noarch.rpm", "eig-hp-hp_my-20200610-1.b44ee87.el7.noarch.rpm"]
         hostname:
           type: string
           example: my1.test.unifiedlayer.com
