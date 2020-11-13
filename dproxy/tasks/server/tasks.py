@@ -15,7 +15,7 @@ def server(self, data):
     try:
         cookies = {"access_token_cookie": request.headers["Authorization"]}
         http = get_http
-        http.post(f"{Config.DEPLOYMENT_API_URI}/server", cookies=cookies, json=data)
+        http.patch(f"{Config.DEPLOYMENT_API_URI}/server", cookies=cookies, json=data)
     except Exception as e:
         logger.error(e)
 
