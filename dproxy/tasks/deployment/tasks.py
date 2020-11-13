@@ -17,11 +17,12 @@ def health_check(hosts):
         status_codes = []
         for host in hosts:
             http = get_http
-            r = http.get(f"http://{host['hostname']}:{host['port']}/")
+            r = http.get(f"{host['protocol']}://{host['hostname']}:{host['port']}/api/{host['version']}/")
             status_codes.append(
                 {
                     "hostname": host["hostname"],
                     "port": host["port"],
+                    "version": host["version"],
                     "status": r.status_code,
                 }
             )
@@ -34,8 +35,12 @@ def health_check(hosts):
 @runner.task(bind=True)
 def rollout(self, data=None, callback=None):
     logger.info(f"Starting Rollout for {data['hostname']}")
+    payload = {
+        "deployment_id": data["deployment_id"],
+        "versionlock": data["versionlock"],
+    }
     http = get_http
-    r = http.post(f"http://{data['hostname']}:{data['port']}/rollout", json=data)
+    r = http.post(f"{data['protocol']}://{data['hostname']}:{data['port']}/api/{data['version']}/rollout", json=payload)
     result = r.json()
     if callback is not None:
         subtask(callback).delay(result)
@@ -45,10 +50,13 @@ def rollout(self, data=None, callback=None):
 @runner.task(bind=True)
 def rollback(self, data=None, callback=None):
     logger.info(f"Starting Rollback for {data['hostname']}")
+    payload = {
+        "deployment_id": data["deployment_id"],
+        "yum_rollback_id": data["yum_rollback_id"],
+        "versionlock": data["versionlock"],
+    }
     http = get_http
-
-    r = http.post(f"http://{data['hostname']}:{data['port']}/rollback", json=data)
-
+    r = http.post(f"{data['protocol']}://{data['hostname']}:{data['port']}/api/{data['version']}/rollback", json=payload)
     result = r.json()
     if callback is not None:
         subtask(callback).delay(result)
