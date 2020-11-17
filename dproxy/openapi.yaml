@@ -95,34 +95,6 @@ paths:
       responses:
         default:
           description: successful operation
-  /update:
-    post:
-      summary: issue an update
-      operationId: dproxy.controllers.update.post_update
-      requestBody:
-        description: Create Update object
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Update'
-        required: true
-      responses:
-        default:
-          description: successful operation
-  /versionlock:
-    post:
-      summary: create a versionlock
-      operationId: dproxy.controllers.versionlock.post_versionlock
-      requestBody:
-        description: Create Versionlock object
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/VersionLock'
-        required: true
-      responses:
-        default:
-          description: successful operation
   /versionlock/{hostname}:
     get:
       tags:
