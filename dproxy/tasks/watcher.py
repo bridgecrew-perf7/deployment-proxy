@@ -1,5 +1,4 @@
 from dproxy.tasks.deployment.tasks import rollout, rollback, complete
-from dproxy.tasks.update.tasks import server_update
 
 from threading import Thread
 from celery import chord
