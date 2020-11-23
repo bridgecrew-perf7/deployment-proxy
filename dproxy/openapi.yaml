@@ -95,16 +95,32 @@ paths:
       responses:
         default:
           description: successful operation
-  /versionlock/{hostname}:
+  /versionlock/{protocol}/{hostname}/{port}:
     get:
       tags:
       - admins
       summary: Get server versionlock
       operationId: dproxy.controllers.versionlock.get_versionlock
       parameters:
+      - name: protocol
+        in: path
+        description: a base64 encoded server endpoint http protocol.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
       - name: hostname
         in: path
         description: a base64 encoded server endpoint hostname.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: port
+        in: path
+        description: a base64 encoded server endpoint port.
         required: true
         style: simple
         explode: false
@@ -285,10 +301,14 @@ components:
         versionlock:
           type: array
           example: ["eig-hp-hp_my-20200527-1.b44ee87.el7.noarch.rpm", "eig-hp-hp_my-20200610-1.b44ee87.el7.noarch.rpm"]
+        protocol:
+          type: string
+          example: http
         hostname:
           type: string
           example: my1.test.unifiedlayer.com
         port:
           type: string
           example: 8003
+
 
