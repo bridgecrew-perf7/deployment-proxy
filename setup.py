@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="dproxy",
-    version="0.2.57",
+    version="0.2.58",
     author="Jacob Bushman",
     author_email="jacob.matthew.bushman@endurance.com",
     description="Deployment Proxy API",
@@ -33,5 +33,5 @@ setup(
         "connexion",
         "swagger-ui-bundle",
     ],
-    python_requires=">=3.6",
+    python_requires="3.9",
 )
